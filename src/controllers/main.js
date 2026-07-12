@@ -23,9 +23,11 @@ const xss = require('xss')
 const settingsUtil = require('../settings/settingsUtil')
 const RateLimiterMemory = require('rate-limiter-flexible').RateLimiterMemory
 
+const LOGIN_FAIL_POINTS_PER_DAY = 100
+
 const limiterSlowBruteByIP = new RateLimiterMemory({
   keyPrefix: 'login_fail_ip_per_day',
-  points: 15,
+  points: LOGIN_FAIL_POINTS_PER_DAY,
   duration: 60 * 60 * 24,
   blockDuration: 60 * 60
 })
@@ -114,7 +116,7 @@ mainController.loginPost = async function (req, res, next) {
   const [resEmailAndIP] = await Promise.all([limiterSlowBruteByIP.get(ipAddress)])
 
   let retrySecs = 0
-  if (resEmailAndIP !== null && resEmailAndIP.consumedPoints > 2) {
+  if (resEmailAndIP !== null && resEmailAndIP.consumedPoints >= LOGIN_FAIL_POINTS_PER_DAY) {
     retrySecs = Math.round(resEmailAndIP.msBeforeNext / 1000) || 1
   }
 
