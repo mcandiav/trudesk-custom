@@ -26,7 +26,12 @@ module.exports = function (middleware, router, controllers) {
   // Common
   router.get('/api', controllers.api.index)
   router.get('/api/v1/version', (req, res) => {
-    return res.json({ version: packagejson.version })
+    const atonceVersion = require('../../../lib/atonceVersion')
+    return res.json({
+      version: packagejson.version,
+      gitHash: atonceVersion.getGitHash(),
+      versionLabel: atonceVersion.getVersionLabel()
+    })
   })
   router.post('/api/v1/login', apiCtrl.common.login)
   router.get('/api/v1/login', apiv1, apiCtrl.common.getLoggedInUser)

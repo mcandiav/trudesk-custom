@@ -1,119 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Trudesk</title>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:200,400,300,600,700' rel='stylesheet' type='text/css'>
+    <title>HelpDesk At-Once-AI · Maintenance</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+    <link rel="stylesheet" href="/css/atonce-branding.css">
     <style type="text/css">
-        html {
-            overflow-x: hidden;
-        }
-        body {
-            background: #eee;
-            text-align: center;
-            font-family: "Roboto", Arial, sans-serif;
-        }
-
+        html { overflow-x: hidden; }
         .wrapper {
-            width: 600px;
-            height: 600px;
+            width: min(600px, 92vw);
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            margin-top: 2rem;
         }
-
-        img {
-            margin-bottom: 55px;
-        }
-
-        label {
-            text-align: left
-        }
-
-        button {
-            font-family: "Roboto", Arial, sans-serif;
-            width: 340px;
-            height: 20px;
-            text-align: left;
-            padding: 15px 20px;
-            background: #384b5f;
-            border: 1px solid #1c2937;
-            font-size: 20px;
-            color: #fff;
-            margin-bottom: 15px;
-            border-radius: 3px;
-            -moz-border-radius: 3px;
-            -webkit-border-radius: 3px;
+        h2 {
+            font-size: 3rem;
             font-weight: 300;
-        }
-
-        button.button {
-            width: 380px;
-            height: auto;
-            text-align: center;
-            background: #e74b3b;
-            border: none;
-            text-transform: uppercase;
-            border-radius: 3px;
-            -moz-border-radius: 3px;
-            -webkit-border-radius: 3px;
-        }
-
-        button.button:hover {
-            background: #f15849;
-            cursor: pointer;
-        }
-
-        *:focus {
-            outline: 0;
-        }
-
-        a {
-            display: inline-block;
-            padding-right: 10px;
-            color: #727272;
-            font-size: 14px;
-            float: right;
-            text-decoration: none;
-            font-weight: 300;
-        }
-
-        a:hover {
-            color: #A5A5A5;
-        }
-
-        ::-webkit-input-placeholder { /* WebKit browsers */
-            color:    #222;
-        }
-        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-            color:    #222;
-            opacity:  1;
-        }
-        ::-moz-placeholder { /* Mozilla Firefox 19+ */
-            color:    #222;
-            opacity:  1;
-        }
-        :-ms-input-placeholder { /* Internet Explorer 10+ */
-            color:    #222;
-        }
-        h2,h4 {
-            text-align: center;
-            font-family: "Roboto", Arial, sans-serif;
-            font-size: 72px;
-            font-weight: 300;
-            margin: 0;
-            color: #343434;
+            margin: 0 0 0.75rem;
+            color: #e2e8f0;
+            font-family: "Segoe UI", system-ui, sans-serif;
         }
         h4 {
-            font-size: 24px;
-            color: #222;
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #94a3b8;
+            font-family: "Segoe UI", system-ui, sans-serif;
+            line-height: 1.5;
         }
     </style>
 </head>
-<body>
+<body class="atonce-public">
+<div class="atonce-public-brand">
+    <a href="/"><img src="/img/atonce-logo.png" alt="HelpDesk At-Once-AI" class="atonce-public-logo" /></a>
+    <p class="login-product">HelpDesk At-Once-AI</p>
+    <p class="login-version" id="atonce-version">…</p>
+</div>
 <div class="wrapper">
     <h2>Maintenance</h2>
-    <h4>Server is current in maintenance. <br />Check back later.</h4>
+    <h4>Server is currently in maintenance.<br />Check back later.</h4>
 </div>
+<script>
+fetch('/version').then(function (r) { return r.json(); }).then(function (d) {
+  var el = document.getElementById('atonce-version');
+  if (el && d.versionLabel) el.textContent = d.versionLabel;
+}).catch(function () {});
+</script>
 </body>
 </html>

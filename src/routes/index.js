@@ -22,7 +22,12 @@ function mainRoutes (router, middleware, controllers) {
     return res.status(200).send('OK')
   })
   router.get('/version', function (req, res) {
-    return res.json({ version: packagejson.version })
+    const atonceVersion = require('../lib/atonceVersion')
+    return res.json({
+      version: packagejson.version,
+      gitHash: atonceVersion.getGitHash(),
+      versionLabel: atonceVersion.getVersionLabel()
+    })
   })
   router.get('/install', function (req, res) {
     return res.redirect('/')

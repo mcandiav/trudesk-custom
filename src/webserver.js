@@ -96,7 +96,12 @@ let port = nconf.get('port') || 8118
       res.status(200).send('OK')
     })
     router.get('/version', (req, res) => {
-      return res.json({ version: pkg.version })
+      const atonceVersion = require('./lib/atonceVersion')
+      return res.json({
+        version: pkg.version,
+        gitHash: atonceVersion.getGitHash(),
+        versionLabel: atonceVersion.getVersionLabel()
+      })
     })
 
     router.get('/install', controllers.install.index)
