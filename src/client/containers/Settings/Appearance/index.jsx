@@ -27,6 +27,14 @@ import Zone from 'components/ZoneBox/zone'
 import ZoneBox from 'components/ZoneBox'
 
 const colorMap = {
+  atonce: {
+    headerBG: '#0b1220',
+    headerPrimary: '#e2e8f0',
+    primary: '#e2e8f0',
+    secondary: '#0f172a',
+    tertiary: '#26c6da',
+    quaternary: '#1e293b'
+  },
   light: {
     headerBG: '#42464d',
     headerPrimary: '#f6f7f8',
@@ -121,7 +129,8 @@ class AppearanceSettings extends React.Component {
 
   calcColorScheme () {
     let colorScheme = 'light'
-    if (this.getSettingsValue('colorSecondary') === '#2f3640') colorScheme = 'dark'
+    if (this.getSettingsValue('colorSecondary') === '#0f172a') colorScheme = 'atonce'
+    else if (this.getSettingsValue('colorSecondary') === '#2f3640') colorScheme = 'dark'
     else if (this.getSettingsValue('colorHeaderBG') === '#112d4e') colorScheme = 'bluejean'
     else if (this.getSettingsValue('colorTertiary') === '#ee2b47') colorScheme = 'midnight'
     else if (this.getSettingsValue('colorHeaderBG') === '#2e3238') colorScheme = 'moonlight'
@@ -264,6 +273,7 @@ class AppearanceSettings extends React.Component {
                     width='60%'
                     showTextbox={false}
                     items={[
+                      { text: 'At-Once (HelpDesk)', value: 'atonce' },
                       { text: 'Light (Default)', value: 'light' },
                       { text: 'Dark', value: 'dark' },
                       { text: 'Blue Jean', value: 'bluejean' },

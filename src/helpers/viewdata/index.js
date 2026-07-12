@@ -177,44 +177,13 @@ viewController.getData = function (request, cb) {
         })
       },
       function (callback) {
-        settingSchema.getSetting('gen:customlogo', function (err, hasCustomLogo) {
-          viewdata.hasCustomLogo = !!(!err && hasCustomLogo && hasCustomLogo.value)
-
-          if (!viewdata.hasCustomLogo) {
-            viewdata.logoImage = '/img/defaultLogoLight.png'
-            return callback()
-          }
-
-          settingSchema.getSetting('gen:customlogofilename', function (err, logoFileName) {
-            if (!err && logoFileName && !_.isUndefined(logoFileName.value)) {
-              viewdata.logoImage = '/assets/' + logoFileName.value
-            } else {
-              viewdata.logoImage = '/img/defaultLogoLight.png'
-            }
-
-            return callback()
-          })
-        })
+        // Identidad Visual At-Once: bundled logo (ignore missing custom uploads)
+        viewdata.logoImage = '/img/atonce-logo.png'
+        return callback()
       },
       function (callback) {
-        settingSchema.getSetting('gen:custompagelogo', function (err, hasCustomPageLogo) {
-          viewdata.hasCustomPageLogo = !!(!err && hasCustomPageLogo && hasCustomPageLogo.value)
-
-          if (!viewdata.hasCustomPageLogo) {
-            viewdata.pageLogoImage = '/img/defaultLogoDark.png'
-            return callback()
-          }
-
-          settingSchema.getSetting('gen:custompagelogofilename', function (err, logoFileName) {
-            if (!err && logoFileName && !_.isUndefined(logoFileName.value)) {
-              viewdata.pageLogoImage = '/assets/' + logoFileName.value
-            } else {
-              viewdata.pageLogoImage = '/img/defaultLogoDark.png'
-            }
-
-            return callback()
-          })
-        })
+        viewdata.pageLogoImage = '/img/atonce-logo.png'
+        return callback()
       },
       function (callback) {
         settingSchema.getSetting('gen:customfavicon', function (err, hasCustomFavicon) {

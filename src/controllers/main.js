@@ -52,10 +52,8 @@ mainController.index = function (req, res) {
     content.colorSecondary = settings.colorSecondary.value
     content.colorTertiary = settings.colorTertiary.value
 
-    content.pageLogo = '/img/defaultLogoDark.png'
-    if (settings.hasCustomPageLogo.value && settings.customPageLogoFilename.value.length > 0) {
-      content.pageLogo = '/assets/' + settings.customPageLogoFilename.value
-    }
+    // Identidad Visual At-Once: always use bundled logo (DB custom upload may 404)
+    content.pageLogo = '/img/atonce-logo.png'
 
     content.bottom = 'HelpDesk At-Once-AI · v' + pkg.version
 
@@ -600,10 +598,8 @@ mainController.l2authget = function (req, res) {
     if (!_.isNull(settings) && !_.isNull(settings.mailerEnabled)) {
       content.mailerEnabled = settings.mailerEnabled.value
     }
-    content.pageLogo = '/img/defaultLogoDark.png'
-    if (settings.hasCustomPageLogo.value && settings.customPageLogoFilename.value.length > 0) {
-      content.pageLogo = '/assets/' + settings.customPageLogoFilename.value
-    }
+    content.pageLogo = '/img/atonce-logo.png'
+    content.version = pkg.version
 
     return res.render('login-otp', content)
   })

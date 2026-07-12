@@ -13,11 +13,32 @@
  */
 
 var _ = require('lodash')
+var async = require('async')
 var path = require('path')
 var sass = require('node-sass')
 var settingUtil = require('../settings/settingsUtil')
 
 var buildsass = {}
+
+// Identidad Visual At-Once — HelpDesk At-Once-AI
+var ATONCE_SASS_VARS = {
+  header_background: '#0b1220',
+  header_primary: '#e2e8f0',
+  primary: '#e2e8f0',
+  secondary: '#0f172a',
+  tertiary: '#26c6da',
+  quaternary: '#1e293b'
+}
+
+var ATONCE_DB_COLORS = [
+  { name: 'color:headerbg', value: '#0b1220' },
+  { name: 'color:headerprimary', value: '#e2e8f0' },
+  { name: 'color:primary', value: '#e2e8f0' },
+  { name: 'color:secondary', value: '#0f172a' },
+  { name: 'color:tertiary', value: '#26c6da' },
+  { name: 'color:quaternary', value: '#1e293b' },
+  { name: 'gen:sitetitle', value: 'HelpDesk At-Once-AI' }
+]
 
 var sassOptionsDefaults = {
   indentedSyntax: true,
@@ -58,10 +79,10 @@ function save (result) {
   fs.writeFileSync(themeCss, result)
 }
 
-buildsass.buildDefault = function (callback) {
+function renderAtOnce (callback) {
   dynamicSass(
     'app.sass',
-    {},
+    ATONCE_SASS_VARS,
     function (result) {
       save(result)
       return callback()
@@ -70,39 +91,26 @@ buildsass.buildDefault = function (callback) {
   )
 }
 
-buildsass.build = function (callback) {
-  settingUtil.getSettings(function (err, s) {
-    if (!err && s) {
-      var settings = s.data.settings
+function persistAtOnceSettings (callback) {
+  async.eachSeries(
+    ATONCE_DB_COLORS,
+    function (item, next) {
+      settingUtil.setSetting(item.name, item.value, function () {
+        return next()
+      })
+    },
+    callback
+  )
+}
 
-      dynamicSass(
-        'app.sass',
-        {
-          header_background: settings.colorHeaderBG.value,
-          header_primary: settings.colorHeaderPrimary.value,
-          primary: settings.colorPrimary.value,
-          secondary: settings.colorSecondary.value,
-          tertiary: settings.colorTertiary.value,
-          quaternary: settings.colorQuaternary.value
-        },
-        function (result) {
-          save(result)
-          return callback()
-        },
-        callback
-      )
-    } else {
-      // Build Defaults
-      dynamicSass(
-        'app.sass',
-        {},
-        function (result) {
-          save(result)
-          return callback()
-        },
-        callback
-      )
-    }
+buildsass.buildDefault = function (callback) {
+  return renderAtOnce(callback)
+}
+
+buildsass.build = function (callback) {
+  // Always apply At-Once palette (overrides legacy DB theme from template install)
+  persistAtOnceSettings(function () {
+    return renderAtOnce(callback)
   })
 }
 
