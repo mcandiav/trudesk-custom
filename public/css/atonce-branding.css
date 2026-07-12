@@ -61,13 +61,15 @@ body.atonce-login .login-product {
 
 body.atonce-login .login-version {
   display: inline-block;
-  margin: 0.15rem 0 0;
-  padding: 0.25rem 0.6rem;
+  margin: 0.35rem 0 0;
+  padding: 0.3rem 0.75rem;
   border-radius: 999px;
   background: var(--atonce-gradient-primary);
   color: #eff6ff;
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.04em;
   line-height: 1.35;
 }
 
@@ -190,10 +192,15 @@ body.atonce-login .bottom {
 }
 
 .top-bar .atonce-brand-version {
-  color: var(--atonce-color-accent-soft, #67e8f9);
-  font-family: var(--atonce-font-family, "Segoe UI", system-ui, sans-serif);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  opacity: 0.95;
+  display: inline-block;
+  margin-top: 0.15rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #26c6da, #1565c0);
+  color: #eff6ff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 1;
 }

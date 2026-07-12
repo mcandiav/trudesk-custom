@@ -34,8 +34,10 @@ viewController.getData = function (request, cb) {
         }
       },
       function (callback) {
-        const packageJson = require('../../../package.json')
-        viewdata.version = packageJson.version
+        const atonceVersion = require('../../lib/atonceVersion')
+        viewdata.version = atonceVersion.getAppRelease()
+        viewdata.gitHash = atonceVersion.getGitHash()
+        viewdata.versionLabel = atonceVersion.getVersionLabel()
         return callback()
       },
       function (callback) {

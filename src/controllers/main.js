@@ -18,6 +18,7 @@ const path = require('path')
 const passport = require('passport')
 const winston = require('winston')
 const pkg = require('../../package')
+const atonceVersion = require('../lib/atonceVersion')
 const xss = require('xss')
 const settingsUtil = require('../settings/settingsUtil')
 const RateLimiterMemory = require('rate-limiter-flexible').RateLimiterMemory
@@ -55,7 +56,7 @@ mainController.index = function (req, res) {
     // Identidad Visual At-Once: always use bundled logo (DB custom upload may 404)
     content.pageLogo = '/img/atonce-logo.png'
 
-    content.bottom = 'HelpDesk At-Once-AI · v' + pkg.version
+    content.bottom = atonceVersion.getVersionLabel()
 
     res.render('login', content)
   })
@@ -599,7 +600,7 @@ mainController.l2authget = function (req, res) {
       content.mailerEnabled = settings.mailerEnabled.value
     }
     content.pageLogo = '/img/atonce-logo.png'
-    content.version = pkg.version
+    content.versionLabel = atonceVersion.getVersionLabel()
 
     return res.render('login-otp', content)
   })

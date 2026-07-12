@@ -151,9 +151,8 @@ class TopbarContainer extends React.Component {
                 <div className='logo'>
                   <img src={viewdata.get('logoImage')} alt='HelpDesk At-Once-AI' className={'site-logo'} />
                   <div className='atonce-brand'>
-                    <span className='atonce-brand-version'>
-                      HelpDesk At-Once-AI · v{viewdata.get('version')}
-                    </span>
+                    <span className='atonce-brand-title'>HelpDesk At-Once-AI</span>
+                    <span className='atonce-brand-version'>{viewdata.get('versionLabel') || viewdata.get('version')}</span>
                   </div>
                 </div>
               </div>
