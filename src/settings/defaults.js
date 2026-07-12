@@ -623,13 +623,17 @@ function mailTemplates (callback) {
         })
       },
       function (done) {
-        templateSchema.findOne({ name: passwordReset.name }, function (err, templates) {
+        templateSchema.findOne({ name: passwordReset.name }, function (err, template) {
           if (err) return done(err)
-          if (!templates || templates.length < 1) {
+          if (!template) {
             return templateSchema.create(passwordReset, done)
           }
 
-          return done()
+          // Keep At-Once branding in sync (existing installs keep old Trudesk HTML otherwise)
+          template.subject = passwordReset.subject
+          template.data = passwordReset.data
+          template.markModified('data')
+          return template.save(done)
         })
       }
     ],

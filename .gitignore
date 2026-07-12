@@ -70,3 +70,7 @@ public/uploads/assets/upload/
 stats\.json
 dist/
 *.heapsnapshot
+
+# Local visual preview (not for deploy)
+public/_preview/
+

@@ -2,26 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>New Password</title>
-    <style>
-        h1,h2,h3,h4,h5,h6 {
-            margin-bottom: 2px;
-        }
-        hr {
-            display: block;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            background: #ccc;
-            height: 3px;
-            border: none;
-        }
-    </style>
+    <title>HelpDesk At-Once-AI · New Password</title>
 </head>
-<body>
-<div>
-    <p>Dear {{user.fullname}},</p>
-    <p>Your password has been reset to: {{password}}</p>
+<body style="margin:0;background:#0f172a;color:#e2e8f0;font-family:Segoe UI,Helvetica,Arial,sans-serif;">
+<div style="max-width:560px;margin:0 auto;padding:24px 16px;">
+    <div style="background:#1e293b;border:1px solid #334155;border-radius:12px;padding:24px;">
+        <p style="text-align:center;color:#67e8f9;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;">HelpDesk At-Once-AI</p>
+        <p>Dear {{user.fullname}},</p>
+        <p>Your HelpDesk At-Once-AI password has been reset to:</p>
+        <p><strong>{{password}}</strong></p>
+    </div>
 </div>
 </body>
 </html>

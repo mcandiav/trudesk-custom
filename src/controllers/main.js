@@ -258,7 +258,7 @@ mainController.forgotL2Auth = function (req, res) {
         .then(function (html) {
           const mailOptions = {
             to: savedUser.email,
-            subject: '[Trudesk] Account Recovery',
+            subject: '[HelpDesk At-Once-AI] Account Recovery',
             html: html,
             generateTextFromHTML: true
           }
@@ -327,7 +327,8 @@ mainController.forgotPass = function (req, res) {
 
       const data = {
         base_url: req.protocol + '://' + req.get('host'),
-        user: savedUser
+        user: savedUser,
+        versionLabel: atonceVersion.getVersionLabel()
       }
 
       async.waterfall(
@@ -386,7 +387,7 @@ mainController.forgotPass = function (req, res) {
             return res.status(500).send(err)
           }
 
-          let subject = '[Trudesk] Password Reset Request'
+          let subject = '[HelpDesk At-Once-AI] Password Reset Request · ' + atonceVersion.getVersionLabel()
           if (template) subject = global.Handlebars.compile(template.subject)(data)
 
           email
@@ -467,7 +468,7 @@ mainController.resetl2auth = function (req, res) {
           .then(function (html) {
             const mailOptions = {
               to: updated.email,
-              subject: '[Trudesk] Two-Factor Authentication Removed!',
+              subject: '[HelpDesk At-Once-AI] Two-Factor Authentication Removed!',
               html: html,
               generateTextFromHTML: true
             }
@@ -553,7 +554,7 @@ mainController.resetPass = function (req, res) {
           .then(function (html) {
             const mailOptions = {
               to: updated.email,
-              subject: '[Trudesk] New Password',
+              subject: '[HelpDesk At-Once-AI] New Password',
               html: html,
               generateTextFromHTML: true
             }
