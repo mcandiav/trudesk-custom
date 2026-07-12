@@ -1,0 +1,33 @@
+# Keep build context small and preserve Docker layer cache for yarn install.
+.git
+.github
+.circleci
+.idea
+.node_repl_history
+
+node_modules
+**/node_modules
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+logs
+coverage
+.nyc_output
+.grunt
+test
+*.log
+*.md
+!README.md
+
+docker-compose.yml
+kubernetes
+mobile
+
+# Local/editor noise
+.eslintignore
+.eslintrc.json
+.codacy.yml
+.istanbul.yml
+.npmrc
