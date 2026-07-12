@@ -31,6 +31,7 @@ const socketUtils = require('../../helpers/utils')
 const sharedVars = require('../../socketio/index').shared
 const socketEvents = require('../../socketio/socketEventConsts')
 const util = require('../../helpers/utils')
+const n8nWebhook = require('../../lib/n8nWebhook')
 
 const sendSocketUpdateToUser = (user, ticket) => {
   socketUtils.sendToUser(
@@ -206,6 +207,13 @@ module.exports = async data => {
     else await createNotification(ticket)
 
     util.sendToAllConnectedClients(io, socketEvents.TICKETS_CREATED, ticket)
+
+    // n8n outbound webhook (fire-and-forget; empty URL = no-op)
+    n8nWebhook
+      .notifyTicketCreated(ticket, { baseUrl, hostname })
+      .catch(function (err) {
+        logger.warn(`[trudesk:events:ticket:created:n8n] - ${err.message || err}`)
+      })
   } catch (e) {
     logger.warn(`[trudesk:events:ticket:created] - Error: ${e}`)
   }
