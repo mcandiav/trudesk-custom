@@ -319,3 +319,75 @@ body.atonce-public .loader svg line {
   stroke: #26c6da !important;
 }
 
+/* Language picker — Identidad Visual At-Once V1.3 variante D
+   Bandera SVG + código ES|PT|EN
+   Ver: identidad visual at-once/tokens/components-lang.css */
+.lang-picker {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.lang-picker-login {
+  position: fixed;
+  top: calc(0.75rem + env(safe-area-inset-top, 0px));
+  right: calc(0.75rem + env(safe-area-inset-right, 0px));
+  z-index: 50;
+}
+
+body.atonce-public .lang-picker {
+  margin-top: 0.75rem;
+}
+
+.lang-flag {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 3.1rem;
+  min-height: 2.25rem;
+  height: auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0.25rem 0.55rem !important;
+  border: 2px solid transparent !important;
+  border-radius: 10px !important;
+  background: rgba(15, 23, 42, 0.9) !important;
+  color: #e2e8f0 !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em;
+  line-height: 1 !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lang-flag img,
+.lang-flag .lang-flag__img {
+  width: 1.15rem;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin: 0 !important;
+}
+
+.lang-flag .lang-flag__code {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: inherit;
+}
+
+.lang-flag:hover {
+  background: rgba(51, 65, 85, 0.85) !important;
+}
+
+.lang-flag.active,
+.lang-flag.is-active {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
+  background: rgba(15, 23, 42, 0.9) !important;
+}
+

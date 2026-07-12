@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nuevo ticket · HelpDesk At-Once-AI</title>
+  <link rel="stylesheet" href="/public/css/atonce-branding.css" />
+  <style>
+    .wrapper {
+      width: min(400px, 92vw);
+      margin: 5.5rem auto 2rem;
+      text-align: center;
+    }
+    .slide {
+      background: var(--atonce-color-surface);
+      border: 1px solid var(--atonce-color-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: left;
+    }
+    .btn.md-btn {
+      margin-top: 0.75rem;
+      padding: 0.65rem 1.25rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+  <script>window.ATONCE_FLAG_BASE = '/public/img/flags/'</script>
+  <script src="/public/js/newissue-i18n.js"></script>
+</head>
+<body class="atonce-public">
+  <div class="lang-picker lang-picker-login" data-newissue-lang-picker aria-label="Idioma"></div>
+
+  <div class="atonce-public-brand">
+    <p class="login-product">HelpDesk At-Once-AI</p>
+    <p class="login-version">1.2.13@local</p>
+  </div>
+
+  <div class="wrapper">
+    <div class="slide">
+      <h2 data-i18n="welcome.title">Nuevo ticket</h2>
+      <p data-i18n="welcome.lead">
+        Este asistente te guiará para enviar un nuevo ticket de soporte.
+      </p>
+      <button class="btn md-btn md-btn-success" type="button" data-i18n="welcome.start">Comenzar</button>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.NewIssueI18n) window.NewIssueI18n.setLang('es')
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Opciones · Selector de idioma At-Once</title>
+  <link rel="stylesheet" href="/public/css/atonce-branding.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 1.5rem 1.25rem 3rem;
+      background: var(--atonce-gradient-page);
+      color: var(--atonce-color-text);
+      font-family: var(--atonce-font-family);
+    }
+    h1 { font-size: 1.25rem; margin: 0 0 0.35rem; }
+    .lead { color: var(--atonce-color-text-muted); margin: 0 0 1.5rem; font-size: 0.95rem; max-width: 52rem; }
+    .grid { display: grid; gap: 1rem; max-width: 52rem; }
+    .opt {
+      background: var(--atonce-color-surface);
+      border: 1px solid var(--atonce-color-border);
+      border-radius: 14px;
+      padding: 1rem 1.15rem;
+    }
+    .opt h2 { margin: 0 0 0.25rem; font-size: 1rem; }
+    .meta { margin: 0 0 0.85rem; color: var(--atonce-color-text-muted); font-size: 0.82rem; line-height: 1.4; }
+    .row { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+    .tag {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--atonce-color-accent-soft);
+    }
+    /* A — emoji nativo (FAQ-Inn actual) */
+    .a .lang-flag { /* uses global from branding */ }
+
+    /* B — imagen bandera */
+    .flag-img {
+      display: grid; place-items: center;
+      min-width: 2.5rem; min-height: 2.25rem;
+      padding: 0.25rem 0.4rem;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      cursor: pointer;
+    }
+    .flag-img img { width: 1.45rem; height: auto; display: block; border-radius: 2px; }
+    .flag-img.active { border-color: #3b82f6; box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35); }
+
+    /* C — texto códigos outline */
+    .code-btn {
+      min-width: 2.5rem; min-height: 2.25rem;
+      padding: 0.2rem 0.55rem;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #e2e8f0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+    .code-btn.active { border-color: #3b82f6; box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35); }
+
+    /* D — bandera + código */
+    .combo {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      min-height: 2.25rem;
+      padding: 0.25rem 0.55rem;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #e2e8f0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .combo img { width: 1.15rem; height: auto; border-radius: 2px; }
+    .combo.active { border-color: #3b82f6; box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35); }
+
+    /* E — píldora gradient activo */
+    .pill {
+      min-width: 2.6rem; min-height: 2.1rem;
+      padding: 0.25rem 0.65rem;
+      border: 1px solid var(--atonce-color-border);
+      border-radius: 999px;
+      background: var(--atonce-color-surface);
+      color: var(--atonce-color-text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .pill.active {
+      border-color: transparent;
+      background: var(--atonce-gradient-primary);
+      color: #eff6ff;
+    }
+
+    /* F — segmented */
+    .seg {
+      display: inline-flex;
+      border: 1px solid var(--atonce-color-border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.9);
+    }
+    .seg button {
+      border: none;
+      background: transparent;
+      color: var(--atonce-color-text-muted);
+      padding: 0.55rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .seg button + button { border-left: 1px solid var(--atonce-color-border); }
+    .seg button.active {
+      background: rgba(59, 130, 246, 0.2);
+      color: #eff6ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Opciones de identidad · botones de idioma</h1>
+  <p class="lead">
+    En FAQ-Inn el estándar son banderas emoji (🇪🇸 🇧🇷 🇺🇸). En Windows a menudo se renderizan como
+    <strong>ES / BR / US</strong> (letras), no como banderas. Elegí la opción que será canónica en Identidad Visual At-Once.
+  </p>
+
+  <div class="grid">
+    <section class="opt a">
+      <h2>A — Banderas emoji (FAQ-Inn actual)</h2>
+      <p class="meta">Clases <code>.lang-picker</code> / <code>.lang-flag</code>. En macOS/Linux se ven banderas; en Windows suelen verse códigos de país.</p>
+      <div class="row lang-picker">
+        <button type="button" class="lang-flag active" title="Español">🇪🇸</button>
+        <button type="button" class="lang-flag" title="Português">🇧🇷</button>
+        <button type="button" class="lang-flag" title="English">🇺🇸</button>
+      </div>
+      <div class="tag">Riesgo Windows · ya en producción FAQ-Inn</div>
+    </section>
+
+    <section class="opt">
+      <h2>B — Banderas imagen (PNG/SVG)</h2>
+      <p class="meta">Misma forma y borde activo FAQ-Inn, pero la bandera es archivo. Se ve igual en Windows, Mac y móvil.</p>
+      <div class="row">
+        <button type="button" class="flag-img active" title="Español"><img src="https://flagcdn.com/w40/es.png" alt="ES" /></button>
+        <button type="button" class="flag-img" title="Português"><img src="https://flagcdn.com/w40/br.png" alt="BR" /></button>
+        <button type="button" class="flag-img" title="English"><img src="https://flagcdn.com/w40/us.png" alt="US" /></button>
+      </div>
+      <div class="tag">Recomendado si querés banderas reales en todos los SO</div>
+    </section>
+
+    <section class="opt">
+      <h2>C — Códigos ES · PT · EN (outline)</h2>
+      <p class="meta">Letras a propósito, mismo contenedor oscuro y borde <code>#3b82f6</code>. Sin depender de emoji ni CDN.</p>
+      <div class="row">
+        <button type="button" class="code-btn active">ES</button>
+        <button type="button" class="code-btn">PT</button>
+        <button type="button" class="code-btn">EN</button>
+      </div>
+      <div class="tag">Simple · lo que ves hoy en Windows con opción A</div>
+    </section>
+
+    <section class="opt">
+      <h2>D — Bandera imagen + código</h2>
+      <p class="meta">Más claro para usuarios: ven bandera y saben el idioma. Un poco más ancho.</p>
+      <div class="row">
+        <button type="button" class="combo active"><img src="https://flagcdn.com/w40/es.png" alt="" /> ES</button>
+        <button type="button" class="combo"><img src="https://flagcdn.com/w40/br.png" alt="" /> PT</button>
+        <button type="button" class="combo"><img src="https://flagcdn.com/w40/us.png" alt="" /> EN</button>
+      </div>
+      <div class="tag">Accesible · híbrido</div>
+    </section>
+
+    <section class="opt">
+      <h2>E — Píldoras con gradient activo</h2>
+      <p class="meta">Activo usa el gradient primario At-Once (como botones de acción), no el borde info de FAQ-Inn.</p>
+      <div class="row">
+        <button type="button" class="pill active">ES</button>
+        <button type="button" class="pill">PT</button>
+        <button type="button" class="pill">EN</button>
+      </div>
+      <div class="tag">Más “botón At-Once” · menos FAQ-Inn</div>
+    </section>
+
+    <section class="opt">
+      <h2>F — Segmented control (un solo bloque)</h2>
+      <p class="meta">Un control continuo; el activo se resalta por fondo. Muy usado en settings.</p>
+      <div class="row">
+        <div class="seg">
+          <button type="button" class="active">ES</button>
+          <button type="button">PT</button>
+          <button type="button">EN</button>
+        </div>
+      </div>
+      <div class="tag">Compacto · menos “tres botones sueltos”</div>
+    </section>
+  </div>
+</body>
+</html>

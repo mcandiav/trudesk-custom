@@ -53,7 +53,7 @@ ticketsController.pubNewIssue = function (req, res) {
         if (err) return handleError(res, err)
 
         const content = {}
-        content.title = 'New Issue'
+        content.title = 'Nuevo ticket'
         content.layout = false
         content.siteTitle = 'HelpDesk At-Once-AI'
         content.versionLabel = atonceVersion.getVersionLabel()

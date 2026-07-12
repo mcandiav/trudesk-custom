@@ -1,4 +1,6 @@
-# HelpDesk At-Once-AI — Docker build optimized for layer cache.
+# syntax=docker/dockerfile:1.7
+
+# HelpDesk At-Once-AI - Docker build optimized for layer cache.
 # Changing CSS/views/JS app code should NOT re-run yarn install.
 
 FROM node:16.14-alpine AS builder
@@ -11,12 +13,14 @@ RUN apk add --no-cache bash make gcc g++ python3 git
 COPY package.json yarn.lock .yarnrc.yml .yarnclean ./
 COPY .yarn/releases .yarn/releases
 
-# 2) Install deps once (heavy) — reused across branding/code deploys
-RUN yarn plugin import workspace-tools \
+# 2) Install deps once (heavy) - reused across branding/code deploys
+RUN --mount=type=cache,id=trudesk-yarn-cache,target=/usr/src/trudesk/.yarn/cache \
+  --mount=type=cache,id=trudesk-yarn-unplugged,target=/usr/src/trudesk/.yarn/unplugged \
+  --mount=type=cache,id=trudesk-node-gyp,target=/root/.cache/node-gyp \
+  yarn plugin import workspace-tools \
   && yarn workspaces focus --all --production \
   && cp -R node_modules prod_node_modules \
-  && yarn install \
-  && rm -rf .yarn/cache
+  && yarn install
 
 # 3) App source (invalidates only from here on typical UI/branding changes)
 ARG GIT_SHA=
@@ -30,7 +34,7 @@ RUN if [ -n "$GIT_SHA" ]; then printf '%.7s\n' "$GIT_SHA" > .git-commit; \
   && yarn build \
   && rm -rf node_modules \
   && mv prod_node_modules node_modules \
-  && rm -rf .yarn/cache test .github .circleci
+  && rm -rf test .github .circleci
 
 FROM node:16.14-alpine
 

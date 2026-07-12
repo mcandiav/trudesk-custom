@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nuevo ticket · HelpDesk At-Once-AI (preview local)</title>
+  <link rel="stylesheet" href="/public/css/atonce-branding.css" />
+  <style>
+    .wrapper {
+      width: min(420px, 94vw);
+      margin: 6.5rem auto 2rem;
+      padding: 0.5rem 0 2rem;
+      text-align: center;
+    }
+    .slide {
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: left;
+    }
+    .slide.hide { display: none; }
+    .preview-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 30;
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      padding: 0.4rem 0.75rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .preview-nav {
+      display: flex;
+      gap: 0.35rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 0 0 0.85rem;
+    }
+    .preview-nav button {
+      font-size: 0.68rem !important;
+      width: auto !important;
+      height: auto !important;
+      min-height: 1.85rem;
+      padding: 0.3rem 0.55rem !important;
+      opacity: 0.75;
+    }
+    .preview-nav button.is-current {
+      opacity: 1;
+      outline: 2px solid #38bdf8;
+    }
+    .flow-hint {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      text-align: center;
+      margin: 0 0 0.75rem;
+    }
+    label { display: block; margin: 0.5rem 0 0.25rem; }
+    input, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 0.5rem;
+    }
+    .btn-row { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+    .btn-row .btn { flex: 1; }
+    .captcha-fake {
+      height: 48px;
+      border-radius: 8px;
+      background: repeating-linear-gradient(
+        -45deg,
+        #1e293b,
+        #1e293b 8px,
+        #334155 8px,
+        #334155 16px
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.35em;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 0.5rem;
+      user-select: none;
+    }
+    .loader-line {
+      height: 3px;
+      margin-top: 1.5rem;
+      background: linear-gradient(90deg, transparent, #26c6da, transparent);
+      background-size: 200% 100%;
+      animation: pulse 1.2s linear infinite;
+    }
+    @keyframes pulse {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+    .privacy-box {
+      max-height: 220px;
+      overflow: auto;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+  <script>window.ATONCE_FLAG_BASE = '/public/img/flags/'</script>
+  <script src="/public/js/newissue-i18n.js"></script>
+</head>
+<body class="atonce-public">
+  <div class="preview-banner">
+    Preview B — recorrido visual del wizard /newissue (sin API). Orden feliz: 1→2→3→4→5. Alternativos: 6·7·8·9.
+  </div>
+
+  <div class="atonce-public-brand" style="top: 2.1rem;">
+    <p class="login-product">HelpDesk At-Once-AI</p>
+    <p class="login-version">preview@local</p>
+    <div class="lang-picker" data-newissue-lang-picker aria-label="Idioma"></div>
+  </div>
+
+  <div class="wrapper">
+    <p class="flow-hint" id="flowHint">Paso 1/5 — Bienvenida</p>
+    <div class="preview-nav" role="navigation" aria-label="Pasos del wizard">
+      <button type="button" class="btn md-btn is-current" data-show="welcome" title="Inicio">1 Welcome</button>
+      <button type="button" class="btn md-btn" data-show="user" title="Datos + captcha">2 User</button>
+      <button type="button" class="btn md-btn" data-show="issue" title="Asunto + descripción">3 Issue</button>
+      <button type="button" class="btn md-btn" data-show="creating" title="Espera creación">4 Creating</button>
+      <button type="button" class="btn md-btn" data-show="created" title="Éxito">5 Created</button>
+      <button type="button" class="btn md-btn" data-show="emailExists" title="Email ya registrado">6 EmailExists</button>
+      <button type="button" class="btn md-btn" data-show="fatal" title="Error">7 Fatal</button>
+      <button type="button" class="btn md-btn" data-show="restart" title="Reinicio">8 Restart</button>
+      <button type="button" class="btn md-btn" data-show="privacy" title="Privacidad">9 Privacy</button>
+    </div>
+
+    <!-- 1 FELIZ: welcome -->
+    <div class="slide" data-slide="welcome">
+      <h2 data-i18n="welcome.title">Nuevo ticket</h2>
+      <p data-i18n="welcome.lead">
+        Este asistente te guiará para enviar un nuevo ticket de soporte.
+      </p>
+      <button class="btn md-btn md-btn-success" type="button" data-i18n="welcome.start" data-next="user">Comenzar</button>
+    </div>
+
+    <!-- 2 FELIZ: user -->
+    <div class="slide hide" data-slide="user">
+      <h2 data-i18n="user.title">Tus datos</h2>
+      <p data-i18n="user.lead">
+        Necesitamos saber cómo registrar tu solicitud. Indícanos un poco sobre ti.
+      </p>
+      <label data-i18n="user.fullname">Nombre completo</label>
+      <input class="md-input" type="text" value="Miguel Demo" />
+      <label data-i18n="user.email">Correo electrónico</label>
+      <input class="md-input" type="email" value="miguel.demo@example.com" />
+      <div class="captcha-fake" aria-hidden="true">X7K2</div>
+      <label data-i18n="user.captcha">Escribe las letras que ves arriba.</label>
+      <input class="md-input" type="text" value="X7K2" />
+      <div class="btn-row">
+        <button class="btn md-btn md-btn-primary1" type="button" data-i18n="user.back" data-next="welcome">Atrás</button>
+        <button class="btn md-btn md-btn-success" type="button" data-i18n="user.next" data-next="issue">Siguiente</button>
+      </div>
+      <p style="margin-top: 0.75rem;">
+        <a href="#" data-i18n="user.privacy" data-next="privacy">Política de privacidad</a>
+      </p>
+    </div>
+
+    <!-- 3 FELIZ: issue -->
+    <div class="slide hide" data-slide="issue">
+      <h2 data-i18n="issue.title">Ticket</h2>
+      <p data-i18n="issue.lead">
+        Cuéntanos el problema. Sé lo más detallado posible para resolverlo pronto.
+      </p>
+      <label data-i18n="issue.subject">Asunto</label>
+      <input class="md-input" type="text" value="No puedo acceder al portal" />
+      <label data-i18n="issue.body">Descripción</label>
+      <textarea class="md-input" rows="4">Al intentar iniciar sesión aparece error 500 desde esta mañana.</textarea>
+      <div class="btn-row">
+        <button class="btn md-btn md-btn-primary1" type="button" data-i18n="issue.back" data-next="user">Atrás</button>
+        <button class="btn md-btn md-btn-success" type="button" data-i18n="issue.submit" data-next="creating">Enviar ticket</button>
+      </div>
+    </div>
+
+    <!-- 4 FELIZ: creating -->
+    <div class="slide hide" data-slide="creating">
+      <h2 data-i18n="creating.title">Creando ticket...</h2>
+      <p data-i18n="creating.lead">
+        Gracias por enviar tu solicitud. Te enviamos un correo con los datos de acceso para ver y crear tickets en el futuro.
+      </p>
+      <div class="loader-line" aria-hidden="true"></div>
+      <p class="flow-hint" style="margin-top: 1rem;">En producción: espera API → luego pasa a Created (o Fatal).</p>
+      <button class="btn md-btn md-btn-success" type="button" style="margin-top: 0.75rem;" data-next="created">Simular éxito →</button>
+    </div>
+
+    <!-- 5 FELIZ: created -->
+    <div class="slide hide" data-slide="created">
+      <h2>
+        <span data-i18n="created.thanks">Gracias</span>
+        <span style="color:#38bdf8;">Miguel Demo</span>,
+      </h2>
+      <p id="createdLead">
+        Tu ticket, <strong>No puedo acceder al portal</strong>, fue enviado. Guarda la siguiente información para acceder y actualizarlo.
+      </p>
+      <p>
+        <span data-i18n="created.username">Usuario</span>: <strong>miguel.demo</strong><br />
+        <span data-i18n="created.password">Contraseña</span>: <strong>Tmp-9k2mQx</strong>
+      </p>
+      <p data-i18n="created.follow">
+        Usa el enlace de abajo para iniciar sesión y ver el estado de este ticket.
+      </p>
+      <button class="btn md-btn md-btn-primary" type="button" data-i18n="created.login">Iniciar sesión</button>
+    </div>
+
+    <!-- 6 ALT: email exists -->
+    <div class="slide hide" data-slide="emailExists">
+      <h2 data-i18n="emailExists.title">El correo ya existe</h2>
+      <p id="emailExistsLead">
+        El correo <span style="font-weight:bold;">miguel.demo@example.com</span> ya está registrado. Si ya tienes cuenta, inicia sesión y crea el ticket desde allí.
+      </p>
+      <button class="btn md-btn md-btn-primary" type="button" data-i18n="emailExists.login" style="width:100%;margin-bottom:0.5rem;">Iniciar sesión</button>
+      <button class="btn md-btn" type="button" data-i18n="emailExists.restart" data-next="welcome" style="width:100%;">Empezar de nuevo</button>
+    </div>
+
+    <!-- 7 ALT: fatal -->
+    <div class="slide hide" data-slide="fatal">
+      <h2 data-i18n="fatal.title">Algo salió mal</h2>
+      <p data-i18n="fatal.lead">
+        Hubo un problema inesperado. Puedes reintentar o volver a empezar.
+      </p>
+      <pre style="font-size:11px;opacity:0.7;margin-bottom:0.75rem;">Error: captcha validation failed (preview)</pre>
+      <button class="btn md-btn md-btn-danger" type="button" data-i18n="fatal.submit" style="width:100%;margin-bottom:0.5rem;">Reportar el problema</button>
+      <button class="btn md-btn md-btn-success" type="button" data-i18n="fatal.retry" data-next="welcome" style="width:100%;margin-bottom:0.5rem;">Empezar de nuevo</button>
+      <button class="btn md-btn" type="button" data-i18n="fatal.docs" style="width:100%;">Ver documentación</button>
+    </div>
+
+    <!-- 8 ALT: restart -->
+    <div class="slide hide" data-slide="restart">
+      <h2 data-i18n="restart.title">Reinicio necesario</h2>
+      <p data-i18n="restart.lead">
+        La aplicación debe reiniciarse. Reiníciala y deberías ver la pantalla de inicio de sesión.
+      </p>
+      <button class="btn md-btn" type="button" data-i18n="restart.btn">Reiniciar</button>
+    </div>
+
+    <!-- 9 ALT: privacy -->
+    <div class="slide hide" data-slide="privacy">
+      <div class="privacy-box">
+        <p><strong>Política de privacidad (texto de ejemplo en preview)</strong></p>
+        <p>En producción este bloque viene de la configuración del sitio ({{{data.privacyPolicy}}}).</p>
+        <p>Aquí solo comprobamos el botón “Atrás” y su traducción.</p>
+      </div>
+      <button class="btn md-btn md-btn-primary" type="button" data-i18n="privacy.back" data-next="user" style="width:100%;">Atrás</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var HINTS = {
+        welcome: 'Paso 1/5 — Bienvenida (flujo feliz)',
+        user: 'Paso 2/5 — Datos + captcha (si email existe → pantalla 6)',
+        issue: 'Paso 3/5 — Asunto y descripción',
+        creating: 'Paso 4/5 — Esperando creación (API)',
+        created: 'Paso 5/5 — Éxito + credenciales temporales',
+        emailExists: 'Alternativo — el correo ya tiene cuenta',
+        fatal: 'Alternativo — error (captcha / servidor)',
+        restart: 'Alternativo — reinicio requerido',
+        privacy: 'Lateral — política de privacidad (desde User)'
+      }
+
+      function show (name) {
+        document.querySelectorAll('[data-slide]').forEach(function (el) {
+          el.classList.toggle('hide', el.getAttribute('data-slide') !== name)
+        })
+        document.querySelectorAll('[data-show]').forEach(function (btn) {
+          btn.classList.toggle('is-current', btn.getAttribute('data-show') === name)
+        })
+        var hint = document.getElementById('flowHint')
+        if (hint) hint.textContent = HINTS[name] || name
+      }
+
+      document.querySelectorAll('[data-show]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          show(btn.getAttribute('data-show'))
+        })
+      })
+      document.querySelectorAll('[data-next]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault()
+          show(btn.getAttribute('data-next'))
+        })
+      })
+
+      window.onNewIssueLangChange = function () {
+        var lead = document.getElementById('emailExistsLead')
+        if (lead && window.NewIssueI18n) {
+          lead.textContent = window.NewIssueI18n.t('emailExists.lead', {
+            email: 'miguel.demo@example.com'
+          })
+        }
+        var created = document.getElementById('createdLead')
+        if (created && window.NewIssueI18n) {
+          created.textContent = window.NewIssueI18n.t('created.lead', {
+            subject: 'No puedo acceder al portal'
+          })
+        }
+      }
+    })()
+  </script>
+</body>
+</html>
