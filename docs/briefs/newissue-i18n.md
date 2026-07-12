@@ -11,7 +11,7 @@ Hacer multilingual **únicamente** la página pública `/newissue` (crear ticket
 
 ## Archivos permitidos
 1. `src/views/pub_createTicket.hbs`
-2. `public/js/newissue-i18n.js`
+2. `public/atonce/newissue-i18n.js` (fuera de `public/js/` porque `webpackdist` hace `rimraf public/js/*`)
 3. `public/css/atonce-branding.css` (selector de idioma = estándar Identidad Visual At-Once)
 4. `public/img/flags/{es,br,us}.svg`
 5. Opcional: 1–2 líneas en `src/controllers/tickets.js` (`pubNewIssue`) si hace falta
