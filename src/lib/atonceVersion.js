@@ -12,8 +12,24 @@ let cachedLabel = null
 
 function shortenHash (value) {
   const trimmed = String(value || '').trim()
-  if (!trimmed || trimmed === 'unknown') return 'unknown'
+  if (!trimmed || trimmed === 'unknown' || trimmed === 'pending') return 'unknown'
   return trimmed.slice(0, 7)
+}
+
+function readVersionFile () {
+  const candidates = [
+    path.join(__dirname, '../../VERSION'),
+    path.join(process.cwd(), 'VERSION')
+  ]
+  for (const file of candidates) {
+    try {
+      const value = fs.readFileSync(file, 'utf8').trim()
+      if (value) return value
+    } catch (e) {
+      /* next */
+    }
+  }
+  return null
 }
 
 function readHashFromFile () {
@@ -24,7 +40,7 @@ function readHashFromFile () {
   for (const file of candidates) {
     try {
       const value = shortenHash(fs.readFileSync(file, 'utf8'))
-      if (value) return value
+      if (value && value !== 'unknown') return value
     } catch (e) {
       /* next */
     }
@@ -42,7 +58,7 @@ function readHashFromGit () {
 
 function getAppRelease () {
   if (cachedRelease) return cachedRelease
-  cachedRelease = String(pkg.version || '0.0.0').trim()
+  cachedRelease = readVersionFile() || String(pkg.version || '0.0.0').trim()
   return cachedRelease
 }
 
@@ -63,7 +79,7 @@ function getGitHash () {
   return cachedHash
 }
 
-/** Formato obligatorio: VERSION_APP@HASH_GIT */
+/** Formato obligatorio UI: VERSION_APP@HASH_GIT */
 function getVersionLabel () {
   if (cachedLabel) return cachedLabel
   cachedLabel = getAppRelease() + '@' + getGitHash()
