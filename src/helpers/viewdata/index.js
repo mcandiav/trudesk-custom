@@ -135,7 +135,7 @@ viewController.getData = function (request, cb) {
           if (!err && setting && setting.value) {
             viewdata.siteTitle = setting.value
           } else {
-            viewdata.siteTitle = 'Trudesk'
+            viewdata.siteTitle = 'HelpDesk At-Once-AI'
           }
 
           return callback()
@@ -220,7 +220,7 @@ viewController.getData = function (request, cb) {
         settingSchema.getSetting('gen:customfavicon', function (err, hasCustomFavicon) {
           viewdata.hasCustomFavicon = !!(!err && hasCustomFavicon && hasCustomFavicon.value)
           if (!viewdata.hasCustomFavicon) {
-            viewdata.favicon = '/img/favicon.ico'
+            viewdata.favicon = '/img/favicon.png'
             return callback()
           }
 
@@ -228,7 +228,7 @@ viewController.getData = function (request, cb) {
             if (!err && faviconFilename && !_.isUndefined(faviconFilename.value)) {
               viewdata.favicon = '/assets/' + faviconFilename.value
             } else {
-              viewdata.favicon = '/img/favicon.ico'
+              viewdata.favicon = '/img/favicon.png'
             }
 
             return callback()

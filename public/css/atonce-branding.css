@@ -1,0 +1,162 @@
+/* Identidad Visual At-Once — HelpDesk At-Once-AI
+   Tokens: identidad visual at-once/tokens/colors.css */
+
+:root {
+  --atonce-color-bg: #0f172a;
+  --atonce-color-bg-deep: #0b1220;
+  --atonce-color-surface: #1e293b;
+  --atonce-color-border: #334155;
+  --atonce-color-text: #e2e8f0;
+  --atonce-color-text-muted: #94a3b8;
+  --atonce-color-primary-cyan: #26c6da;
+  --atonce-color-primary-blue: #1565c0;
+  --atonce-color-accent: #38bdf8;
+  --atonce-color-accent-soft: #67e8f9;
+  --atonce-gradient-primary: linear-gradient(135deg, #26c6da, #1565c0);
+  --atonce-gradient-page: radial-gradient(circle at top, #1e293b, #0f172a 55%);
+  --atonce-font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body.atonce-login {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--atonce-gradient-page) !important;
+  color: var(--atonce-color-text);
+  font-family: var(--atonce-font-family) !important;
+  text-align: center;
+}
+
+body.atonce-login .login-wrapper {
+  width: min(400px, 92vw);
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+body.atonce-login .login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+}
+
+body.atonce-login .site-logo-login {
+  display: block;
+  width: min(280px, 80vw);
+  height: auto;
+  margin: 0 auto 0.25rem !important;
+}
+
+body.atonce-login .login-product {
+  margin: 0.15rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--atonce-color-accent-soft);
+}
+
+body.atonce-login .login-version {
+  display: inline-block;
+  margin: 0.15rem 0 0;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--atonce-gradient-primary);
+  color: #eff6ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+}
+
+body.atonce-login label {
+  color: var(--atonce-color-text-muted) !important;
+}
+
+body.atonce-login .md-input,
+body.atonce-login input[type="text"],
+body.atonce-login input[type="password"] {
+  color: var(--atonce-color-text) !important;
+  background: transparent;
+}
+
+body.atonce-login .md-input-bar:before,
+body.atonce-login .md-input-bar:after {
+  background: var(--atonce-color-primary-cyan) !important;
+}
+
+body.atonce-login .btn.md-btn,
+body.atonce-login button.btn {
+  background: var(--atonce-gradient-primary) !important;
+  color: #eff6ff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  font-weight: 600;
+}
+
+body.atonce-login .btn.md-btn:hover,
+body.atonce-login button.btn:hover {
+  filter: brightness(1.08);
+  cursor: pointer;
+}
+
+body.atonce-login a {
+  color: var(--atonce-color-accent) !important;
+}
+
+body.atonce-login a:hover {
+  color: var(--atonce-color-accent-soft) !important;
+}
+
+body.atonce-login .alert-message {
+  background: var(--atonce-gradient-primary) !important;
+}
+
+body.atonce-login .alert-message.green {
+  background: #22c55e !important;
+}
+
+body.atonce-login .bottom {
+  color: var(--atonce-color-text-muted) !important;
+  font-family: var(--atonce-font-family) !important;
+}
+
+/* App chrome (topbar / logo) */
+.top-bar .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.top-bar .site-logo {
+  max-height: 36px;
+  width: auto;
+}
+
+.top-bar .atonce-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.top-bar .atonce-brand-title {
+  color: var(--atonce-color-text, #e2e8f0);
+  font-family: var(--atonce-font-family, "Segoe UI", system-ui, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.top-bar .atonce-brand-version {
+  color: var(--atonce-color-accent-soft, #67e8f9);
+  font-family: var(--atonce-font-family, "Segoe UI", system-ui, sans-serif);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.95;
+}

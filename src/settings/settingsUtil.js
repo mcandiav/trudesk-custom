@@ -52,7 +52,7 @@ util.getSettings = async callback => {
         s.emailBeta = parseSetting(settings, 'beta:email', false)
         s.hasThirdParty = !nconf.get('thirdParty') ? false : nconf.get('thirdParty').enable
 
-        s.siteTitle = parseSetting(settings, 'gen:sitetitle', 'Trudesk')
+        s.siteTitle = parseSetting(settings, 'gen:sitetitle', 'HelpDesk At-Once-AI')
         s.siteUrl = parseSetting(settings, 'gen:siteurl', '')
         s.timezone = parseSetting(settings, 'gen:timezone', 'America/New_York')
         s.timeFormat = parseSetting(settings, 'gen:timeFormat', 'hh:mma')
@@ -66,12 +66,13 @@ util.getSettings = async callback => {
         s.hasCustomFavicon = parseSetting(settings, 'gen:customfavicon', false)
         s.customFaviconFilename = parseSetting(settings, 'gen:customfaviconfilename', '')
 
-        s.colorHeaderBG = parseSetting(settings, 'color:headerbg', '#42464d')
-        s.colorHeaderPrimary = parseSetting(settings, 'color:headerprimary', '#f6f7fa')
-        s.colorPrimary = parseSetting(settings, 'color:primary', '#545A63')
-        s.colorSecondary = parseSetting(settings, 'color:secondary', '#f7f8fa')
-        s.colorTertiary = parseSetting(settings, 'color:tertiary', '#E74C3C')
-        s.colorQuaternary = parseSetting(settings, 'color:quaternary', '#E6E7E8')
+        // Identidad Visual At-Once (defaults)
+        s.colorHeaderBG = parseSetting(settings, 'color:headerbg', '#0b1220')
+        s.colorHeaderPrimary = parseSetting(settings, 'color:headerprimary', '#e2e8f0')
+        s.colorPrimary = parseSetting(settings, 'color:primary', '#e2e8f0')
+        s.colorSecondary = parseSetting(settings, 'color:secondary', '#0f172a')
+        s.colorTertiary = parseSetting(settings, 'color:tertiary', '#26c6da')
+        s.colorQuaternary = parseSetting(settings, 'color:quaternary', '#1e293b')
 
         s.defaultTicketType = parseSetting(settings, 'ticket:type:default', '')
         s.minSubjectLength = parseSetting(settings, 'ticket:minlength:subject', 10)

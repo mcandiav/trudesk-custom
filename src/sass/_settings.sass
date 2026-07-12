@@ -19,48 +19,43 @@
 // THEME
 // ----------------------------------------------------------
 
+// Identidad Visual At-Once — HelpDesk At-Once-AI
 // Most Text, Icons, and borders
-$primary: #606771 !default
-//$primary: #eef0f6 !default
+$primary: #e2e8f0 !default
 // The main background color, text color of some buttons
-$secondary: #f7f8fa !default
-//$secondary: #2a344c !default
+$secondary: #0f172a !default
 // Link, Some Buttons, notifications, and accent color
-$tertiary: #E74C3C !default
-//$tertiary: #30b4c9 !default
+$tertiary: #26c6da !default
 // Sidebar
-$quaternary: #e6e7e8 !default
-//$quaternary: darken(#ffffff, 9%) !default
+$quaternary: #1e293b !default
 // Background color of Header
-$header_background: #42464d !default
-//$header_background: #eef0f6 !default
+$header_background: #0b1220 !default
 // Text and icon color in the header
-$header_primary: #f6f7f8 !default
-//$header_primary: #2a344c !default
+$header_primary: #e2e8f0 !default
 // Used to indicate an action was successful
-$accent_success: #29b955 !default
+$accent_success: #22c55e !default
 // Highlight color for actions and Errors
-$accent_danger: #d32f2f !default
+$accent_danger: #b91c1c !default
 // Highlight color for warnings
-$accent_warn: #feca57 !default
+$accent_warn: #fbbf24 !default
 // Highlight color for agents
-$accent_agent: #7d5fff
+$accent_agent: #38bdf8
 
 // ------------------------------------------------------------------------
 
 $rowWidth: 100%
-$fontFamily: "Roboto", "Open Sans", sans-serif
-$fontFamilyMono: "Ubuntu Monospace", monospace
+$fontFamily: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Roboto", "Open Sans", sans-serif
+$fontFamilyMono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Ubuntu Monospace", monospace
 
 $accent_color: $tertiary
-$accent_blue: #2196F3
+$accent_blue: #3b82f6
 
 $text_color: $primary
 $p_color: $primary
 
 //THEME
 $logo_text_color: #FFFFFF
-$logo_circle_color: #E74C3C
+$logo_circle_color: #26c6da
 
 $topbar_bg: $header_background
 $topbar_text_color: $header_primary
@@ -79,8 +74,8 @@ $sidebar_bg: $quaternary
 $sidebar_border_right: 1px solid darken($sidebar_bg, 5%)
 $sidebar_text: automatic-text-color($sidebar_bg, 'sidebar')
 $sidebar_text_hover: $sidebar_text
-$sidebar_item_hover: darken($sidebar_bg, 8%)
-$sidebar_item_active: lighten($topbar_bg, 5%)
+$sidebar_item_hover: lighten($sidebar_bg, 8%)
+$sidebar_item_active: lighten($topbar_bg, 8%)
 $sidebar_item_active_text: automatic-text-color($sidebar_item_active, 'sidebar')
 $sidebar_subnav_bg: darken($sidebar_bg, 5%)
 $sidebar_subnav_box_shadow: none
@@ -92,15 +87,15 @@ $sidebar_subnav_hr: darken($sidebar_subnav_bg, 5%)
 
 $page_content_bg: $secondary
 //$page_content_border_color: rgba(darken($page_content_bg, 25%), 0.25)
-$page_content_border_color: rgba(0,0,0,0.15)
-$page_content_right_bg: lighten($secondary, 10%)
+$page_content_border_color: rgba(255,255,255,0.12)
+$page_content_right_bg: lighten($secondary, 4%)
 $page_content_left_bg: $secondary
 $page_content_title_bg: $secondary
-$page_content_title_shadow: 2px 2px 2px 0px rgba(44,62,80,0.1)
+$page_content_title_shadow: 2px 2px 2px 0px rgba(0,0,0,0.25)
 $page_content_title_border_color: $page_content_border_color
 $page_content_title_text: automatic-text-color($page_content_title_bg)
 $page_content_border_top: 1px solid $page_content_border_color
-$page_content_border_accent: 2px solid $page_content_title_bg
+$page_content_border_accent: 2px solid $tertiary
 $page_content_button_color: lighten($page_content_bg, 10%)
 $page_content_button_text_color: automatic-text-color($page_content_button_color)
 
