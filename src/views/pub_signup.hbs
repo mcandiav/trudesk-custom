@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Trudesk &middot; {{{title}}}</title>
+    <title>{{{siteTitle}}} &middot; {{{title}}}</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
     <link rel="stylesheet" href="/css/plugins.min.css">
     <link rel="stylesheet" href="/css/app.min.css">
+    <link rel="stylesheet" href="/css/atonce-branding.css">
     <style type="text/css">
         html {
             overflow-x: hidden;
             height: 100%;
-            font: 400 14px/20px "Roboto", Arial, sans-serif;
         }
         body {
             background: #eee;
@@ -219,7 +220,7 @@
     <script src="/js/vendor.js"></script>
     <script src="/js/truRequire.js"></script>
 </head>
-<body>
+<body class="atonce-public">
 <svg version="1.1" id="logosvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 288.9 70.1" xml:space="preserve" style="width: 150px; margin-bottom: 40px;">
     <style type="text/css">
@@ -271,12 +272,17 @@
         C236.3,23.1,238.1,12.5,238.1,6.9z"></path>
     <circle class="st1" cx="284.9" cy="64.7" r="4"></circle>
     </svg>
+<div class="atonce-public-brand">
+    <img src="{{pageLogo}}" alt="HelpDesk At-Once-AI" class="atonce-public-logo" />
+    <p class="login-product">HelpDesk At-Once-AI</p>
+    <p class="login-version">{{versionLabel}}</p>
+</div>
 <div class="wrapper">
     <div class="slides">
         <div class="slide">
             <h2 style="margin-bottom: 18px;">Create Account</h2>
             <p style="text-align: left;">
-                This wizard will walk you through the process of creating an account to access trudesk.
+                This wizard will walk you through the process of creating an account to access HelpDesk At-Once-AI.
             </p>
 
             <button class="btn md-btn md-btn-wave md-btn-success" data-next>Lets Get Started</button>

@@ -20,6 +20,7 @@ const permissions = require('../permissions')
 const emitter = require('../emitter')
 const xss = require('xss')
 const path = require('path')
+const atonceVersion = require('../lib/atonceVersion')
 
 const accountsController = {}
 
@@ -47,6 +48,9 @@ accountsController.signup = function (req, res) {
         const content = {}
         content.title = 'Create Account'
         content.layout = false
+        content.siteTitle = 'HelpDesk At-Once-AI'
+        content.versionLabel = atonceVersion.getVersionLabel()
+        content.pageLogo = '/img/atonce-logo.png'
         content.data = {}
 
         if (privacyPolicy === null || _.isUndefined(privacyPolicy.value)) {

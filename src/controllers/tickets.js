@@ -19,6 +19,7 @@ const departmentSchema = require('../models/department')
 const permissions = require('../permissions')
 const xss = require('xss')
 const fs = require('fs-extra')
+const atonceVersion = require('../lib/atonceVersion')
 /**
  * @since 1.0
  * @author Chris Brame <polonel@gmail.com>
@@ -54,6 +55,9 @@ ticketsController.pubNewIssue = function (req, res) {
         const content = {}
         content.title = 'New Issue'
         content.layout = false
+        content.siteTitle = 'HelpDesk At-Once-AI'
+        content.versionLabel = atonceVersion.getVersionLabel()
+        content.pageLogo = '/img/atonce-logo.png'
         content.data = {}
         if (privacyPolicy === null || _.isUndefined(privacyPolicy.value)) {
           content.data.privacyPolicy = 'No Privacy Policy has been set.'
