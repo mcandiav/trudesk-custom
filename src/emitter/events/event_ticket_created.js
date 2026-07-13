@@ -201,7 +201,8 @@ module.exports = async data => {
     const ticket = await Ticket.getTicketById(ticketObject._id)
     const settings = await Setting.getSettingsByName(['gen:siteurl', 'mailer:enable', 'beta:email'])
 
-    const baseUrl = head(filter(settings, ['name', 'gen:siteurl'])).value
+    // siteurl often ends with "/"; strip so template links don't become "//tickets/..."
+    const baseUrl = String(head(filter(settings, ['name', 'gen:siteurl'])).value || '').replace(/\/+$/, '')
     let mailerEnabled = head(filter(settings, ['name', 'mailer:enable']))
     mailerEnabled = !mailerEnabled ? false : mailerEnabled.value
     let betaEnabled = head(filter(settings, ['name', 'beta:email']))

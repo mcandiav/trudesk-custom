@@ -1,6 +1,6 @@
 {
   "name": "trudesk",
-  "version": "1.2.32",
+  "version": "1.2.33",
   "description": "HelpDesk At-Once-AI — Trudesk fork with Identidad Visual At-Once",
   "private": true,
   "engines": {
