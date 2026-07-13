@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1.7
 #
-# HelpDesk At-Once-AI — deploy UI (activar en Easypanel cuando GHCR tenga la base)
-# Servicio `trudesk` → Build File = Dockerfile.ui
-#
-# Requiere: ghcr.io/mcandiav/trudesk-custom-base:latest (workflow publish-base.yml)
+# HelpDesk At-Once-AI — deploy UI (servicio Easypanel `trudesk`)
+# Build File en Easypanel: Dockerfile.ui
+# Requiere imagen: ghcr.io/mcandiav/trudesk-custom-base:latest (Public)
+# Runbook: docs/ops-easypanel-rebuild.md
 
 ARG BASE_IMAGE=ghcr.io/mcandiav/trudesk-custom-base:latest
 FROM ${BASE_IMAGE}

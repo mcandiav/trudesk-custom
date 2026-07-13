@@ -69,18 +69,26 @@ Trudesk is tested with confidence using [BrowserStack](https://browserstack.com)
 
 ## Arquitectura At-Once
 
+### Operación Easypanel / imagen base + UI
+
+Runbook completo (reconstruir desde cero, tres servicios, GHCR, `Dockerfile.ui`, emergencias):
+
+**[docs/ops-easypanel-rebuild.md](docs/ops-easypanel-rebuild.md)**
+
+Índice corto: [docs/easypanel-base-ui.md](docs/easypanel-base-ui.md)
+
 ### Bitácora de cambios
 
 | Fecha | Versión | Cambio realizado | Motivo | Impacto | Sección afectada |
 |---|---:|---|---|---|---|
+| 2026-07-13 | 1.2 | Modelo base (GHCR) + UI (`Dockerfile.ui`) documentado; 3 servicios Easypanel | Acelerar deploys de look & feel sin recompilar lógica Trudesk | Operación: File=`Dockerfile.ui` en `trudesk`; base en Stop; Action publish-base | Despliegue / Easypanel |
 | 2026-07-12 | 1.0 | Se define la integración saliente Trudesk → n8n para creación de tickets | Ejecutar automatizaciones externas cada vez que Trudesk registre un ticket nuevo | Requiere desarrollo backend acotado y configuración de un Webhook Trigger en n8n | Integración n8n para nuevos tickets |
 
 ### Estado documental
 
-- Versión arquitectónica: **1.0**.
-- Estado de la integración: **definida, pendiente de programación y pruebas**.
-- Alcance actual: notificar a n8n exclusivamente cuando se crea un ticket.
-- No existe actualmente un webhook HTTP saliente configurable en esta versión de Trudesk.
+- Versión arquitectónica documental: **1.2** (ops base+UI).
+- Despliegue producción: `trudesk` con **`Dockerfile.ui`** sobre `ghcr.io/mcandiav/trudesk-custom-base`.
+- Integración n8n `ticket.created`: implementada (`TD_N8N_*` en env); URL vacía = no-op.
 
 ## Integración n8n para nuevos tickets
 
