@@ -493,8 +493,24 @@
                     method: 'GET',
                     url: '/captcha',
                     success: function (response) {
-                        var svg = $(response).find('svg');
-                        $('#captchaImage').append(svg);
+                        var $svg = $(response);
+                        if (!$svg.is('svg')) $svg = $svg.find('svg').first();
+                        if (!$svg.length) return;
+
+                        // Fondo = gradiente CSS del contenedor; letras oscuras = legibles sobre cyan→azul
+                        $svg.css('background-color', 'transparent');
+                        $svg.find('rect').attr('fill', 'transparent');
+                        $svg.find('path, text').each(function () {
+                            var $el = $(this);
+                            if ($el.attr('fill') && $el.attr('fill') !== 'none') {
+                                $el.attr('fill', '#0b1220');
+                            }
+                            if ($el.attr('stroke') && $el.attr('stroke') !== 'none') {
+                                $el.attr('stroke', '#0b1220');
+                            }
+                        });
+
+                        $('#captchaImage').empty().append($svg);
                     },
                     error: function (err) {
                         console.error(err);

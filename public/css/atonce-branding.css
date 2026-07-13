@@ -319,6 +319,23 @@ body.atonce-public .loader svg line {
   stroke: #26c6da !important;
 }
 
+/* Captcha (/newissue): mismo gradiente que botones + contraste */
+body.atonce-public #captchaImage {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 0.35rem 0.5rem;
+  border-radius: 10px;
+  background: var(--atonce-gradient-primary);
+  line-height: 0;
+  overflow: hidden;
+}
+
+body.atonce-public #captchaImage svg {
+  display: block;
+  margin: 0 auto;
+  background: transparent !important;
+}
+
 /* Language picker — Identidad Visual At-Once V1.3 variante D
    Bandera SVG + código ES|PT|EN
    Ver: identidad visual at-once/tokens/components-lang.css */
