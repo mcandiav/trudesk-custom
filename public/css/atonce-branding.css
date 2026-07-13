@@ -391,3 +391,126 @@ body.atonce-public .lang-picker {
   background: rgba(15, 23, 42, 0.9) !important;
 }
 
+@media (max-width: 767px) {
+  body.atonce-login .login-wrapper {
+    width: min(94vw, 560px);
+  }
+
+  body.atonce-login .login-brand {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  body.atonce-login .site-logo-login {
+    width: min(340px, 90vw);
+  }
+
+  body.atonce-login .login-product {
+    font-size: 0.95rem;
+  }
+
+  body.atonce-login .login-version {
+    font-size: 0.98rem;
+    padding: 0.38rem 0.9rem;
+  }
+
+  body.atonce-login .md-input-wrapper > label {
+    font-size: 1rem !important;
+  }
+
+  body.atonce-login .md-input,
+  body.atonce-login input[type="text"],
+  body.atonce-login input[type="password"] {
+    font-size: 1rem !important;
+    padding: 0.9rem 1rem !important;
+  }
+
+  body.atonce-login .btn.md-btn,
+  body.atonce-login button.btn {
+    height: 56px;
+    font-size: 1rem;
+  }
+
+  body.atonce-login .bottom {
+    position: static;
+    display: block;
+    margin: 1rem 0 0;
+    font-size: 0.85rem;
+  }
+
+  body.atonce-public .atonce-public-brand {
+    top: 0.85rem;
+    width: min(96vw, 680px);
+  }
+
+  body.atonce-public .atonce-public-logo {
+    width: min(300px, 84vw);
+  }
+
+  body.atonce-public .wrapper,
+  body.atonce-public #privacyPolicySlide {
+    width: min(94vw, 680px) !important;
+    padding: 0.85rem 0 2rem;
+  }
+
+  body.atonce-public .wrapper .slide {
+    width: 100%;
+  }
+
+  body.atonce-public .white-box {
+    height: auto;
+    max-height: 58vh;
+  }
+
+  body.atonce-public h2 {
+    font-size: 1.9rem;
+  }
+
+  body.atonce-public p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  body.atonce-public .btn.md-btn,
+  body.atonce-public button.btn,
+  body.atonce-public .md-btn-success,
+  body.atonce-public .md-btn-primary,
+  body.atonce-public .md-btn-primary1 {
+    min-height: 56px;
+    font-size: 1rem;
+  }
+
+  body.atonce-public .loader svg {
+    width: 180px !important;
+  }
+
+  body.atonce-public .lang-picker {
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  body.atonce-public .lang-flag {
+    min-width: 3.5rem;
+    min-height: 2.4rem;
+    font-size: 0.8rem !important;
+  }
+
+  body.atonce-public .wrapper div[style*="width: 25%"],
+  body.atonce-public .wrapper div[style*="width: 70%"],
+  body.atonce-public .wrapper div[style*="width: 75%"] {
+    float: none !important;
+    width: 100% !important;
+    margin-bottom: 0.75rem;
+  }
+
+  body.atonce-public .wrapper div[style*="width: 25%"] + div[style*="width: 70%"],
+  body.atonce-public .wrapper div[style*="width: 25%"] + div[style*="width: 75%"] {
+    float: none !important;
+    width: 100% !important;
+  }
+
+  body.atonce-public .wrapper div[style*="margin-top: 50px"] {
+    margin-top: 1.5rem !important;
+  }
+}
+
