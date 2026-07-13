@@ -321,17 +321,17 @@ body.atonce-public .loader svg line {
 
 /* Captcha (/newissue): mismo gradiente que botones + contraste */
 body.atonce-public #captchaImage {
-  display: inline-block;
-  margin-bottom: 10px;
-  padding: 0.35rem 0.5rem;
-  border-radius: 10px;
-  background: var(--atonce-gradient-primary);
-  line-height: 0;
-  overflow: hidden;
+  display: inline-block !important;
+  margin-bottom: 10px !important;
+  padding: 0.45rem 0.65rem !important;
+  border-radius: 10px !important;
+  background: var(--atonce-gradient-primary) !important;
+  line-height: 0 !important;
+  overflow: hidden !important;
 }
 
 body.atonce-public #captchaImage svg {
-  display: block;
+  display: block !important;
   margin: 0 auto;
   background: transparent !important;
 }
