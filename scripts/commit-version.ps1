@@ -19,7 +19,8 @@ $packageFile = Join-Path $root "package.json"
 $gitCommitFile = Join-Path $root ".git-commit"
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
-Set-Content -Path $versionFile -Value $Version -Encoding UTF8 -NoNewline
+# Always write VERSION without BOM (PS 5 Set-Content -Encoding UTF8 adds U+FEFF)
+[System.IO.File]::WriteAllText($versionFile, $Version, $utf8NoBom)
 git add $versionFile
 
 if (Test-Path $packageFile) {

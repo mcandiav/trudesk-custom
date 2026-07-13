@@ -32,7 +32,11 @@ jobs:
       - name: Read VERSION
         id: ver
         shell: bash
-        run: echo "version=$(tr -d ' \r\n' < VERSION)" >> "$GITHUB_OUTPUT"
+        run: |
+          # Strip UTF-8 BOM / whitespace (Windows PowerShell WriteAllText/Set-Content can add U+FEFF)
+          version=$(sed 's/^\xef\xbb\xbf//' VERSION | tr -d ' \r\n')
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "Resolved VERSION=${version}"
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
