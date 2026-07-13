@@ -21,7 +21,7 @@
 
         .wrapper,
         #privacyPolicySlide {
-            width: 400px;
+            width: min(400px, 92vw);
             height: auto;
             position: absolute;
             left: 50%;
@@ -32,7 +32,7 @@
         }
 
         #privacyPolicySlide {
-            width: 75%;
+            width: min(92vw, 720px);
             text-align: left;
             height: auto;
         }
@@ -213,6 +213,62 @@
             stroke: #000;
             stroke-width: 5;
             stroke-linecap: round;
+        }
+
+        @media (max-width: 767px) {
+            .wrapper,
+            #privacyPolicySlide {
+                width: min(94vw, 720px);
+                padding: 10px 0 22px;
+            }
+
+            body.atonce-public .atonce-public-brand {
+                top: 0.75rem;
+                width: min(94vw, 720px);
+            }
+
+            body.atonce-public .atonce-public-logo {
+                width: min(320px, 88vw);
+            }
+
+            .slides h2 {
+                font-size: 2rem;
+                line-height: 1.15;
+            }
+
+            .slides p,
+            .slides label,
+            .white-box {
+                font-size: 1.05rem;
+                line-height: 1.6;
+            }
+
+            .slides .btn.md-btn,
+            .slides button.btn {
+                min-height: 56px;
+                font-size: 1rem;
+            }
+
+            .slides div[style*="width: 25%"],
+            .slides div[style*="width: 70%"],
+            .slides div[style*="width: 75%"] {
+                float: none !important;
+                width: 100% !important;
+            }
+
+            .slides div[style*="margin-top: 50px"] {
+                margin-top: 1.5rem !important;
+            }
+
+            .white-box {
+                height: auto;
+                max-height: 58vh;
+            }
+
+            .lang-picker {
+                margin-top: 0.9rem;
+                flex-wrap: wrap;
+            }
         }
     </style>
 
