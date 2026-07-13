@@ -166,7 +166,7 @@
     E = [],
     B = {
       _version: '3.3.1',
-      _config: { classPrefix: '', enableClasses: !0, enableJSClass: !0, usePrefixes: !0 },
+      _config: { classPrefix: '', enableClasses: !1, enableJSClass: !0, usePrefixes: !0 },
       _q: [],
       on: function (A, e) {
         var t = this
