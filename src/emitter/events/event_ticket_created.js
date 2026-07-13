@@ -66,12 +66,14 @@ const parseMemberEmails = async ticket => {
   let emailTo = concat(teamMembers, ticket.group.sendMailTo)
 
   emailTo = chain(emailTo)
-    .filter(i => {
-      return i.email !== ticket.owner.email
-    })
     .map(i => i.email)
     .uniq()
     .value()
+
+  // Confirmation copy to ticket creator (owner), in addition to agents / sendMailTo
+  if (ticket.owner && ticket.owner.email) {
+    emailTo = uniq(concat(emailTo, [ticket.owner.email]))
+  }
 
   members = uniqBy(members, i => i._id)
 
@@ -83,6 +85,11 @@ const parseMemberEmails = async ticket => {
     if (typeof member.email === 'undefined' || emailTo.indexOf(member.email) === -1) continue
 
     emails.push(member.email)
+  }
+
+  // Owner may not be in group.members/team; still send creation confirmation
+  if (ticket.owner && ticket.owner.email && emails.indexOf(ticket.owner.email) === -1) {
+    emails.push(ticket.owner.email)
   }
 
   return uniq(emails)

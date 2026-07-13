@@ -2,55 +2,133 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Updated: Ticket #{{ticket.uid}}</title>
+    <title>HelpDesk At-Once-AI · Updated Ticket #{{ticket.uid}}</title>
     <style>
-        h1,h2,h3,h4,h5,h6 {
-            margin-bottom: 2px;
-        }
-        hr {
-            display: block;
+        body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            background: #ccc;
-            height: 3px;
-            border: none;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-family: "Segoe UI", Helvetica, Arial, sans-serif;
         }
+        .wrap {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .product {
+            text-align: center;
+            color: #67e8f9;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin: 0 0 20px;
+        }
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 12px;
+            color: #e2e8f0;
+        }
+        h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 16px 0 8px;
+            color: #e2e8f0;
+        }
+        p, li {
+            margin: 0 0 10px;
+            line-height: 1.5;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        .meta {
+            margin: 0 0 6px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        .meta strong {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+        .divider {
+            height: 1px;
+            background: #334155;
+            border: none;
+            margin: 16px 0;
+        }
+        .issue, .comment-body {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+        .comment-block {
+            margin: 0 0 14px;
+            padding: 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+        }
+        .comment-block h5 {
+            margin: 0 0 4px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #67e8f9;
+        }
+        .comment-date {
+            margin: 0 0 8px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .muted {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 16px;
+        }
+        ul { padding-left: 18px; margin: 0 0 10px; }
     </style>
 </head>
 <body>
-    <div>
-        <h2>Updated: {{{ticket.subject}}}</h2>
-        <h5>Ticket Group: {{ticket.group.name}}</h5>
-        <h5>Ticket Submitted by: {{ticket.owner.fullname}}</h5>
-        <h5>Submitted Date: {{ticket.date}}</h5>
-        <h5>Ticket Type: {{ticket.type.name}}</h5>
-        <h5>Ticket Priority: {{ticket.priority.name}}</h5>
-        <h5>
-            <span class="strong">Tags:</span>
-            <ul>
-                {{#each ticket.tags}}
-                    <li>{{name}}</li>
-                {{/each}}
-            </ul>
-        </h5>
-
-        <br/><br/>
-        <h4>Ticket Issue</h4>
-        <hr/>
-        <p class="issue">{{{ticket.issue}}}</p>
-
-        <br/><br/>
-        <h4>Comments</h4>
-        <hr/>
+<div class="wrap">
+    <div class="card">
+        <p class="product">HelpDesk At-Once-AI</p>
+        <h1>Ticket #{{ticket.uid}} updated</h1>
+        <p>A new comment was added to this ticket.</p>
+        <hr class="divider" />
+        <h2>{{{ticket.subject}}}</h2>
+        <p class="meta"><strong>Group:</strong> {{ticket.group.name}}</p>
+        <p class="meta"><strong>Submitted by:</strong> {{ticket.owner.fullname}}</p>
+        <p class="meta"><strong>Type:</strong> {{ticket.type.name}}</p>
+        <p class="meta"><strong>Priority:</strong> {{ticket.priority.name}}</p>
+        {{#if ticket.tags}}
+        <p class="meta"><strong>Tags:</strong></p>
+        <ul>
+            {{#each ticket.tags}}
+                <li>{{name}}</li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        <hr class="divider" />
+        <h2>Issue</h2>
+        <div class="issue">{{{ticket.issue}}}</div>
+        <hr class="divider" />
+        <h2>Comments</h2>
         {{#each ticket.comments}}
-            <h5>{{owner.fullname}}</h5>
-            <h5>{{date}}</h5>
-            <br/>
-            <p class="issue">{{{comment}}}</p>
-            <br/>
-            <hr/>
+            <div class="comment-block">
+                <h5>{{owner.fullname}}</h5>
+                <p class="comment-date">{{date}}</p>
+                <div class="comment-body">{{{comment}}}</div>
+            </div>
         {{/each}}
+        <p class="muted">You are receiving this message because you are subscribed to this ticket in HelpDesk At-Once-AI.</p>
     </div>
+</div>
 </body>
 </html>

@@ -1,76 +1,134 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Ticket #{{ticket.uid}}</title>
-    <link href="https://fonts.googleapis.com/css?family=Heebo:400,600,700" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>HelpDesk At-Once-AI · Ticket #{{ticket.uid}}</title>
     <style>
         body {
-            font-family: "Heebo", sans-serif;
-        }
-        h1,h2,h3,h4,h5,h6 {
-            margin-bottom: 2px;
-            font-weight: 400;
-        }
-        p {
-            font-weight: 300;
-            font-size: 14px;
-            line-height: 18px;
-        }
-        hr {
-            display: block;
             margin: 0;
             padding: 0;
-            width: 100%;
-            background: #ddd;
-            height: 3px;
-            border: none;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-family: "Segoe UI", Helvetica, Arial, sans-serif;
         }
-        .strong {
-            font-weight: 600;
+        .wrap {
+            max-width: 560px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
         }
         .logo {
-            height: 75px;
+            display: block;
+            max-width: 220px;
+            height: auto;
+            margin: 0 auto 12px;
+        }
+        .product {
             text-align: center;
+            color: #67e8f9;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin: 0 0 20px;
         }
-
-        .logo svg {
-            height: 75px;
+        .center { text-align: center; }
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 12px;
+            color: #e2e8f0;
         }
-
-        .logo svg path {
-            fill: #222;
+        h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 16px 0 8px;
+            color: #e2e8f0;
         }
-
-        .logo svg circle {
-            fill: #E74C3C;
+        p, li {
+            margin: 0 0 10px;
+            line-height: 1.5;
+            color: #cbd5e1;
+            font-size: 14px;
         }
+        .meta {
+            margin: 0 0 6px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        .meta strong {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+        .divider {
+            height: 1px;
+            background: #334155;
+            border: none;
+            margin: 16px 0;
+        }
+        .issue {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 12px 18px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #26c6da, #1565c0);
+            color: #eff6ff !important;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .muted {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 16px;
+        }
+        ul { padding-left: 18px; margin: 0 0 10px; }
     </style>
 </head>
 <body>
-    <div>
-        <p>
-            A ticket has been submitted by {{ticket.owner.fullname}}. The ticket details are listed below.
-        </p>
-        <hr>
+<div class="wrap">
+    <div class="card">
+        <div class="center">
+            <img class="logo" src="{{base_url}}/img/atonce-logo.png" alt="HelpDesk At-Once-AI" />
+            <p class="product">HelpDesk At-Once-AI</p>
+        </div>
+        <h1>Ticket #{{ticket.uid}} created</h1>
+        <p>A new ticket has been registered in HelpDesk At-Once-AI. Details are listed below.</p>
+        <hr class="divider" />
         <h2>{{{ticket.subject}}}</h2>
-        <h5><span class="strong">Ticket Group:</span> {{ticket.group.name}}</h5>
-        <h5><span class="strong">Ticket Submitted by:</span> {{ticket.owner.fullname}}</h5>
-        <h5><span class="strong">Submitted Date:</span> {{ticket.date}}</h5>
-        <h5><span class="strong">Ticket Type:</span> {{ticket.type.name}}</h5>
-        <h5><span class="strong">Ticket Priority:</span> {{ticket.priority.name}}</h5>
-        <h5>
-            <span class="strong">Tags:</span>
-            <ul>
-                {{#each ticket.tags}}
-                    <li>{{name}}</li>
-                {{/each}}
-            </ul>
-        </h5>
-        <br/>
-        <h4>Ticket Issue</h4>
-        <hr/>
-        <p class="issue">{{{ticket.issue}}}</p>
+        <p class="meta"><strong>Group:</strong> {{ticket.group.name}}</p>
+        <p class="meta"><strong>Submitted by:</strong> {{ticket.owner.fullname}}</p>
+        <p class="meta"><strong>Date:</strong> {{ticket.date}}</p>
+        <p class="meta"><strong>Type:</strong> {{ticket.type.name}}</p>
+        <p class="meta"><strong>Priority:</strong> {{ticket.priority.name}}</p>
+        {{#if ticket.tags}}
+        <p class="meta"><strong>Tags:</strong></p>
+        <ul>
+            {{#each ticket.tags}}
+                <li>{{name}}</li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        <hr class="divider" />
+        <h2>Issue</h2>
+        <div class="issue">{{{ticket.issue}}}</div>
+        {{#if base_url}}
+        <p class="center">
+            <a class="btn" href="{{base_url}}/tickets/{{ticket.uid}}">View Ticket #{{ticket.uid}}</a>
+        </p>
+        {{/if}}
+        <p class="muted">You are receiving this message because you created or follow this ticket in HelpDesk At-Once-AI.</p>
     </div>
+</div>
 </body>
 </html>
