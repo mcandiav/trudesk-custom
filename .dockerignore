@@ -23,7 +23,6 @@ test
 
 docker-compose.yml
 kubernetes
-mobile
 
 # Local/editor noise
 .eslintignore
