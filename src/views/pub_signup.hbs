@@ -641,11 +641,14 @@
             });
 
             function getCaptcha() {
+                var captchaBackground = '#384b5f';
                 $.ajax({
                    method: 'GET',
                     url: '/captcha',
                     success: function(response) {
                        var svg = $(response).find('svg');
+                       svg.css('background-color', captchaBackground);
+                       svg.find('rect').attr('fill', captchaBackground);
                        $('#captchaImage').append(svg);
                     },
                     error: function(err) {
