@@ -16,6 +16,7 @@ ENV TD_GIT_COMMIT=$GIT_SHA
 COPY public/css/atonce-branding.css ./public/css/atonce-branding.css
 COPY public/img/ ./public/img/
 COPY public/atonce/ ./public/atonce/
+COPY mobile/ ./mobile/
 COPY src/views/ ./src/views/
 COPY src/mailer/templates/ ./src/mailer/templates/
 COPY VERSION ./
