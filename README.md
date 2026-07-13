@@ -81,7 +81,7 @@ Runbook completo (reconstruir desde cero, tres servicios, GHCR, `Dockerfile.ui`,
 
 | Fecha | Versión | Cambio realizado | Motivo | Impacto | Sección afectada |
 |---|---:|---|---|---|---|
-| 2026-07-13 | 1.2 | Modelo base (GHCR) + UI (`Dockerfile.ui`) documentado; 3 servicios Easypanel | Acelerar deploys de look & feel sin recompilar lógica Trudesk | Operación: File=`Dockerfile.ui` en `trudesk`; base en Stop; Action publish-base | Despliegue / Easypanel |
+| 2026-07-13 | 1.2 | Modelo base (GHCR) + UI (`Dockerfile.ui`); runbook completo `ops-easypanel-rebuild.md` | Poder reconstruir desde cero (Easypanel, env, GHCR, emergencias) | Operación: File=`Dockerfile.ui` en `trudesk`; base en Stop; Action publish-base | Despliegue / Easypanel |
 | 2026-07-12 | 1.0 | Se define la integración saliente Trudesk → n8n para creación de tickets | Ejecutar automatizaciones externas cada vez que Trudesk registre un ticket nuevo | Requiere desarrollo backend acotado y configuración de un Webhook Trigger en n8n | Integración n8n para nuevos tickets |
 
 ### Estado documental
