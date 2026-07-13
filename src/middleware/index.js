@@ -129,8 +129,12 @@ module.exports = function (app, db, callback) {
           })
         })
 
-        // Mobile app: serve the bundled Ionic client from /mobile.
-        app.use('/mobile', express.static(path.join(__dirname, '../../', 'mobile')))
+        // Mobile app: serve the bundled Ionic client from /mobile without a directory redirect loop.
+        const mobileDir = path.join(__dirname, '../../', 'mobile')
+        app.get(['/mobile', '/mobile/'], function (req, res) {
+          return res.sendFile(path.join(mobileDir, 'index.html'))
+        })
+        app.use('/mobile', express.static(mobileDir))
 
         app.use('/assets', express.static(path.join(__dirname, '../../public/uploads/assets')))
         app.use('/uploads/users', express.static(path.join(__dirname, '../../public/uploads/users')))

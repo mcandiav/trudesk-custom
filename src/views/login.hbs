@@ -147,7 +147,7 @@
         });
 
         $(document).ready(function() {
-            if (window.matchMedia && window.matchMedia('(max-width: 800px)').matches && window.location.pathname !== '/mobile') {
+            if (window.matchMedia && window.matchMedia('(max-width: 800px)').matches && window.location.pathname.indexOf('/mobile') !== 0) {
                 window.location.replace('/mobile');
             }
 
