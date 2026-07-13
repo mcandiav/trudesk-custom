@@ -75,7 +75,8 @@ function getGitHash () {
     cachedHash = fromEnv
     return cachedHash
   }
-  cachedHash = readHashFromFile() || readHashFromGit() || 'unknown'
+  // Leer siempre de HEAD para que el badge sea fiel al commit desplegado
+  cachedHash = readHashFromGit() || readHashFromFile() || 'unknown'
   return cachedHash
 }
 
