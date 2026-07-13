@@ -10843,7 +10843,7 @@ a.item-content:hover .online-status {
   display: flex;
   justify-content: space-around;
   align-items: flex-end; }
-  .user-is-typing .dot {
+.user-is-typing .dot {
     display: inline-block;
     background-color: #90949c;
     border-radius: 50%;
@@ -10862,3 +10862,69 @@ a.item-content:hover .online-status {
     transform: translateY(-7px); }
   36%, 100% {
     transform: translateY(0px); } }
+
+@media (max-width: 767px) {
+  html,
+  body,
+  .ionic-body,
+  .mobile-container {
+    font-size: 16px;
+  }
+
+  .bar .title {
+    font-size: 19px;
+  }
+
+  .button,
+  .button.button-icon,
+  .bar .button,
+  .bar button {
+    font-size: 16px;
+  }
+
+  .item {
+    font-size: 16px;
+  }
+
+  .item h2 {
+    font-size: 18px;
+  }
+
+  .item p,
+  .ticket-details h5,
+  .ticket-content h5,
+  .profile-details h4,
+  .message .message-date {
+    font-size: 15px;
+  }
+
+  .ticket-details h4,
+  .ticket-content h4,
+  .profile-details h3 {
+    font-size: 19px;
+  }
+
+  .message .message-body {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .message-send-button:before {
+    font-size: 32px !important;
+    line-height: 36px !important;
+  }
+
+  .tab-item {
+    font-size: 12px;
+  }
+
+  .tab-item .icon:before {
+    font-size: 34px;
+  }
+
+  .noTickets,
+  .noMessages,
+  .loading-container .loading h1 {
+    font-size: 28px;
+  }
+}
