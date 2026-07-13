@@ -1,35 +1,37 @@
-# Servicios Easypanel — modelo base + UI
+# Easypanel: base + UI (HelpDesk At-Once-AI)
 
 ## Servicios
 
-| Servicio | Rol | ¿UP 24/7? | Source |
-|----------|-----|-----------|--------|
-| `trudesk-db` | MongoDB | Sí | (ya existe) |
-| `trudesk` | HelpDesk usuarios | Sí | Github → `Dockerfile` (completo, por ahora) |
-| `trudesk-base` | Imagen lógica (fork) | **No** (Stop tras build) | Github → `Dockerfile.base` |
+| Servicio | Rol | UP 24/7 | Source |
+|----------|-----|---------|--------|
+| `trudesk-db` | Mongo | Sí | (existente) |
+| `trudesk-base` | Build local opcional / referencia | **Stop** | Github → `Dockerfile.base` |
+| `trudesk` | HelpDesk usuarios | Sí | Github → `Dockerfile` (UI sobre GHCR) |
 
-## Dónde se “declara” la base
+## Imagen base en GitHub Packages (GHCR)
 
-No hay campo Base en Source/Branch/Build path.
+- Imagen: `ghcr.io/mcandiav/trudesk-custom-base:latest`
+- Se publica con Actions: **Publish trudesk-base (GHCR)**
+- Primera vez: Actions → ese workflow → **Run workflow**
+- Luego: en GitHub → Packages → el paquete → **Change visibility** a **Public** (para que Easypanel pueda hacer `FROM` sin login)
 
-La base es **otro App** en el mismo proyecto, llamado `trudesk-base`, con:
+## Archivos Docker
 
-- Repository: `mcandiav/trudesk-custom`
-- Branch: `master`
-- Build path: `/`
-- Build: Dockerfile
-- File: `Dockerfile.base`
+| Archivo | Uso |
+|---------|-----|
+| `Dockerfile` | Build completo (activo hoy en `trudesk`) |
+| `Dockerfile.ui` | Deploy UI sobre GHCR (**activar después** de publicar la base) |
+| `Dockerfile.base` | Lógica (Action GHCR + servicio `trudesk-base`) |
+| `Dockerfile.full` | Copia de respaldo del build monolítico |
 
-## Orden de trabajo
+## Orden operativo
 
-1. Crear servicio `trudesk-base` y hacer **un** Deploy (build largo, una vez).
-2. **Stop** `trudesk-base` (no dejarlo corriendo).
-3. Más adelante: publicar esa imagen / cablear `trudesk` para que el deploy diario solo copie UI.
+1. Base publicada en GHCR (workflow OK).
+2. Paquete GHCR en **Public**.
+3. Servicio `trudesk` → Build File = **`Dockerfile.ui`** (cambiar desde `Dockerfile`).
+4. Deploy `trudesk` → debe ser corto (sin yarn/webpack).
+5. `trudesk-base` en Easypanel permanece en **Stop**.
 
-Hasta el paso 3, `trudesk` sigue igual (build completo). Crear la base **no** acelera aún el HelpDesk; prepara el modelo.
+## Emergencia
 
-## Qué va en cada capa (alcance)
-
-**Base (lógica — raro tocar):** controllers, API, webhook n8n, React/`src/client`, deps, webpack.
-
-**UI (día a día):** `public/css`, `public/img`, `public/atonce`, `src/views/*.hbs`, templates mail visuales, `VERSION` / badge.
+Si el deploy UI falla al bajar la base, en Easypanel `trudesk` → Build File = `Dockerfile` o `Dockerfile.full`.
