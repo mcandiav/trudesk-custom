@@ -50,7 +50,13 @@ function mainRoutes (router, middleware, controllers) {
 
   router.get('/captcha', function (req, res) {
     const svgCaptcha = require('svg-captcha')
-    const captcha = svgCaptcha.create()
+    // Fondo sólido de marca (svg-captcha no soporta gradiente). Cyan At-Once + letras oscuras.
+    const captcha = svgCaptcha.create({
+      size: 6,
+      noise: 2,
+      color: false,
+      background: '#26c6da'
+    })
     req.session.captcha = captcha.text
     res.set('Content-Type', 'image/svg+xml')
     res.send(captcha.data)

@@ -7,19 +7,16 @@
     <link rel="stylesheet" href="/css/app.min.css">
     <link rel="stylesheet" href="/css/atonce-branding.css?v={{versionLabel}}">
     <style type="text/css">
-        /* Captcha: estilos en página (no depender solo del CSS cacheado) */
+        /* Captcha: el fondo de marca viene del SVG (/captcha → svg-captcha) */
         #captchaImage {
             display: inline-block !important;
             margin-bottom: 10px !important;
-            padding: 0.45rem 0.65rem !important;
             border-radius: 10px !important;
-            background: linear-gradient(135deg, #26c6da, #1565c0) !important;
             line-height: 0 !important;
             overflow: hidden !important;
         }
         #captchaImage svg {
             display: block !important;
-            background: transparent !important;
         }
 
         html {
@@ -513,32 +510,8 @@
                         var doc = parser.parseFromString(response, 'image/svg+xml');
                         var svgEl = doc.querySelector('svg');
                         if (!svgEl) return;
-
-                        // Gradiente de marca en el contenedor (inline: evita caché CSS rota)
-                        var $box = $('#captchaImage');
-                        $box.css({
-                            display: 'inline-block',
-                            marginBottom: '10px',
-                            padding: '0.45rem 0.65rem',
-                            borderRadius: '10px',
-                            background: 'linear-gradient(135deg, #26c6da, #1565c0)',
-                            lineHeight: '0',
-                            overflow: 'hidden'
-                        });
-
-                        svgEl.style.backgroundColor = 'transparent';
-                        svgEl.querySelectorAll('rect').forEach(function (rect) {
-                            rect.setAttribute('fill', 'transparent');
-                        });
-                        // Letras + ruido oscuros = legibles sobre cyan→azul
-                        svgEl.querySelectorAll('path, text').forEach(function (el) {
-                            var fill = el.getAttribute('fill');
-                            var stroke = el.getAttribute('stroke');
-                            if (fill && fill !== 'none') el.setAttribute('fill', '#0b1220');
-                            if (stroke && stroke !== 'none') el.setAttribute('stroke', '#0b1220');
-                        });
-
-                        $box.empty().append(document.importNode(svgEl, true));
+                        // Fondo/letras salen del origen (svg-captcha.create en /captcha)
+                        $('#captchaImage').empty().append(document.importNode(svgEl, true));
                     },
                     error: function (err) {
                         console.error(err);
