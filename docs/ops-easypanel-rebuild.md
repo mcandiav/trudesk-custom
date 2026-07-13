@@ -284,11 +284,12 @@ Solo estos paths (look & feel / textos públicos):
 - `public/atonce/` (ej. `newissue-i18n.js`)
 - `src/views/` (Handlebars)
 - `src/mailer/templates/`
+- `src/emitter/events/event_ticket_created.js` (hotfix: email al creador del ticket; evita republish-base)
 - `VERSION` (+ stamp de `.git-commit` vía `GIT_SHA` si Easypanel lo pasa)
 
 ### 5.2 Qué NO va en el deploy UI diario
 
-- Controllers, API, webhook n8n (`src/lib/n8nWebhook.js`, eventos)
+- Controllers, API, webhook n8n (`src/lib/n8nWebhook.js`) y demás eventos (salvo el hotfix anterior)
 - `src/client` (React del panel) — se considera lógica ya compilada en la base
 - `package.json` / `yarn.lock` (cambiarlos republica base vía Action)
 

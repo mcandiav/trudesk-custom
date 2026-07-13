@@ -19,6 +19,8 @@ COPY public/atonce/ ./public/atonce/
 COPY mobile/ ./mobile/
 COPY src/views/ ./src/views/
 COPY src/mailer/templates/ ./src/mailer/templates/
+# Logic hotfix layer: ticket-created recipients (owner confirmation). Avoids full base republish.
+COPY src/emitter/events/event_ticket_created.js ./src/emitter/events/event_ticket_created.js
 COPY VERSION ./
 
 RUN if [ -n "$GIT_SHA" ]; then printf '%.7s\n' "$GIT_SHA" > .git-commit; \
