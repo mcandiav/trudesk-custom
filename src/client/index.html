@@ -139,8 +139,8 @@
 <audio id="clicksound" src="/sounds/click.ogg" class="uk-hidden"></audio>
 
 <script type="text/javascript">
-  if (screen.width <= 800) {
-    document.location = '/mobile';
+  if (window.matchMedia && window.matchMedia('(max-width: 800px)').matches && window.location.pathname !== '/mobile') {
+    window.location.replace('/mobile');
   }
 </script>
 

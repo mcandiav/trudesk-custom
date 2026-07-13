@@ -147,8 +147,8 @@
         });
 
         $(document).ready(function() {
-            if (screen.width <= 800) {
-                document.location = '/mobile';
+            if (window.matchMedia && window.matchMedia('(max-width: 800px)').matches && window.location.pathname !== '/mobile') {
+                window.location.replace('/mobile');
             }
 
             setTimeout(function() {

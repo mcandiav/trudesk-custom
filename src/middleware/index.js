@@ -129,11 +129,8 @@ module.exports = function (app, db, callback) {
           })
         })
 
-        // Mobile - Disable mobile view until rewrite due to a security bug
-        // app.use('/mobile', express.static(path.join(__dirname, '../../', 'mobile')))
-        app.use('/mobile', (req, res, next) => {
-          return res.redirect('/')
-        })
+        // Mobile app: serve the bundled Ionic client from /mobile.
+        app.use('/mobile', express.static(path.join(__dirname, '../../', 'mobile')))
 
         app.use('/assets', express.static(path.join(__dirname, '../../public/uploads/assets')))
         app.use('/uploads/users', express.static(path.join(__dirname, '../../public/uploads/users')))
