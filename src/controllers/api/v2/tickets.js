@@ -49,7 +49,9 @@ ticketsV2.get = async (req, res) => {
 
   try {
     let groups = []
-    if (req.user.role.isAdmin || req.user.role.isAgent) {
+    if (req.user.role.isAdmin) {
+      groups = await Models.Group.find({})
+    } else if (req.user.role.isAgent) {
       const dbGroups = await Models.Department.getDepartmentGroupsOfUser(req.user._id)
       groups = dbGroups.map(g => g._id)
     } else {
@@ -94,7 +96,9 @@ ticketsV2.get = async (req, res) => {
         break
     }
 
-    if (!permissions.canThis(req.user.role, 'tickets:viewall', false)) queryObject.owner = req.user._id
+    if (!req.user.role.isAdmin && !permissions.canThis(req.user.role, 'tickets:viewall', false)) {
+      queryObject.owner = req.user._id
+    }
 
     const tickets = await Models.Ticket.getTicketsWithObject(mappedGroups, queryObject)
     const totalCount = await Models.Ticket.getCountWithObject(mappedGroups, queryObject)
@@ -120,7 +124,11 @@ ticketsV2.single = async function (req, res) {
     if (err) return apiUtils.sendApiError(res, 500, err)
     if (!ticket) return apiUtils.sendApiError(res, 404, 'Ticket not found')
 
-    if (req.user.role.isAdmin || req.user.role.isAgent) {
+    if (req.user.role.isAdmin) {
+      return apiUtils.sendApiSuccess(res, { ticket })
+    }
+
+    if (req.user.role.isAgent) {
       Models.Department.getDepartmentGroupsOfUser(req.user._id, function (err, dbGroups) {
         if (err) return apiUtils.sendApiError(res, 500, err)
 

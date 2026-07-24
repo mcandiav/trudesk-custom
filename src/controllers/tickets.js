@@ -483,7 +483,11 @@ ticketsController.single = function (req, res) {
     async.waterfall(
       [
         function (next) {
-          if (!req.user.role.isAdmin && !req.user.role.isAgent) {
+          if (req.user.role.isAdmin) {
+            return groupSchema.find({}, next)
+          }
+
+          if (!req.user.role.isAgent) {
             return groupSchema.getAllGroupsOfUserNoPopulate(req.user._id, next)
           }
 
@@ -503,6 +507,13 @@ ticketsController.single = function (req, res) {
           })
         },
         function (userGroups, next) {
+          if (req.user.role.isAdmin) {
+            content.data.ticket = ticket
+            content.data.ticket.priorityname = ticket.priority.name
+
+            return next()
+          }
+
           const hasPublic = permissions.canThis(user.role, 'tickets:public')
           const groupIds = userGroups.map(function (g) {
             return g._id.toString()
