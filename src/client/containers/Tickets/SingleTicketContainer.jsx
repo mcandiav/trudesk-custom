@@ -133,6 +133,16 @@ class SingleTicketContainer extends React.Component {
     return this.ticket.comments.length > 0 || this.ticket.notes.length > 0
   }
 
+  @computed get subscriberUsers () {
+    if (!this.ticket || !this.ticket.subscribers) return []
+    return this.ticket.subscribers
+  }
+
+  isUserSubscribed (user) {
+    if (!user || !this.ticket || !this.ticket.subscribers) return false
+    return this.ticket.subscribers.findIndex(i => i._id === user._id) !== -1
+  }
+
   componentDidMount () {
     this.props.socket.on(TICKETS_UPDATE, this.onUpdateTicket)
     this.props.socket.on(TICKETS_ASSIGNEE_UPDATE, this.onUpdateAssignee)
@@ -557,6 +567,34 @@ class SingleTicketContainer extends React.Component {
                                   <p>{item.description}</p>
                                 </div>
                               ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {helpers.canUser('agent:*', true) && (
+                      <div className='uk-width-1-1 padding-left-right-15'>
+                        <div className='tru-card ticket-details uk-clearfix'>
+                          <span>Subscribers</span>
+                          <div className='uk-margin-small-top'>
+                            <div className='uk-clearfix'>
+                              <strong>Creator:</strong> {this.isUserSubscribed(this.ticket.owner) ? 'Subscribed' : 'Not subscribed'}
+                            </div>
+                            {this.ticket.assignee && (
+                              <div className='uk-clearfix'>
+                                <strong>Assignee:</strong> {this.isUserSubscribed(this.ticket.assignee) ? 'Subscribed' : 'Not subscribed'}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className='tag-list uk-clearfix' style={{ marginTop: 10 }}>
+                            {this.subscriberUsers.length < 1 && <div className='item'>No subscribers</div>}
+                            {this.subscriberUsers.map(subscriber => (
+                              <div key={subscriber._id} className='item' style={{ maxWidth: '100%', height: 'auto' }}>
+                                <strong>{subscriber.fullname || subscriber.username}</strong>
+                                {subscriber.email && <span className='uk-display-block'>{subscriber.email}</span>}
+                              </div>
+                            ))}
                           </div>
                         </div>
                       </div>
