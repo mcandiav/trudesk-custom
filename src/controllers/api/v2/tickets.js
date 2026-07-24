@@ -160,15 +160,25 @@ ticketsV2.single = async function (req, res) {
       Models.Group.getAllGroupsOfUser(req.user._id, function (err, userGroups) {
         if (err) return apiUtils.sendApiError(res, 500, err)
 
+        const hasPublic = permissions.canThis(req.user.role, 'tickets:public')
+        const canViewAll = permissions.canThis(req.user.role, 'tickets:viewall')
         const groupIds = userGroups.map(function (m) {
           return m._id.toString()
         })
 
-        if (groupIds.includes(ticket.group._id.toString())) {
-          return apiUtils.sendApiSuccess(res, { ticket })
-        } else {
+        if (!groupIds.includes(ticket.group._id.toString()) && !(ticket.group.public && hasPublic)) {
           return apiUtils.sendApiError(res, 403, 'Forbidden')
         }
+
+        if (ticket.owner._id.toString() !== req.user._id.toString() && !canViewAll) {
+          return apiUtils.sendApiError(res, 403, 'Forbidden')
+        }
+
+        if (!permissions.canThis(req.user.role, 'comments:view')) ticket.comments = []
+
+        if (!permissions.canThis(req.user.role, 'tickets:notes')) ticket.notes = []
+
+        return apiUtils.sendApiSuccess(res, { ticket })
       })
     }
   })
