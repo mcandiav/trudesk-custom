@@ -462,6 +462,8 @@ ticketsController.print = function (req, res) {
 ticketsController.single = function (req, res) {
   const user = req.user
   const uid = req.params.id
+  const isAdmin = permissions.canThis(req.user.role, 'admin:*')
+  const isAgent = permissions.canThis(req.user.role, 'agent:*')
   if (isNaN(uid)) {
     return res.redirect('/tickets')
   }
@@ -483,11 +485,11 @@ ticketsController.single = function (req, res) {
     async.waterfall(
       [
         function (next) {
-          if (req.user.role.isAdmin) {
+          if (isAdmin) {
             return groupSchema.find({}, next)
           }
 
-          if (!req.user.role.isAgent) {
+          if (!isAgent) {
             return groupSchema.getAllGroupsOfUserNoPopulate(req.user._id, next)
           }
 
@@ -507,7 +509,7 @@ ticketsController.single = function (req, res) {
           })
         },
         function (userGroups, next) {
-          if (req.user.role.isAdmin) {
+          if (isAdmin) {
             content.data.ticket = ticket
             content.data.ticket.priorityname = ticket.priority.name
 

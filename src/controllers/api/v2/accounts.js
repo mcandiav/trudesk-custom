@@ -22,6 +22,7 @@ const Group = require('../../../models/group')
 const Team = require('../../../models/team')
 const Department = require('../../../models/department')
 const passwordComplexity = require('../../../settings/passwordComplexity')
+const permissions = require('../../../permissions')
 
 const accountsApi = {}
 
@@ -32,8 +33,11 @@ accountsApi.sessionUser = async (req, res) => {
     const dbUser = await User.findOne({ _id: req.user._id })
     if (!dbUser) return apiUtil.sendApiError(res, 404, 'Invalid User')
 
+    const isAdmin = permissions.canThis(dbUser.role, 'admin:*')
+    const isAgent = permissions.canThis(dbUser.role, 'agent:*')
     let groups = []
-    if (dbUser.role.isAdmin || dbUser.role.isAgent) groups = await Department.getDepartmentGroupsOfUser(dbUser._id)
+    if (isAdmin) groups = await Group.find({})
+    else if (isAgent) groups = await Department.getDepartmentGroupsOfUser(dbUser._id)
     else groups = await Group.getAllGroupsOfUser(dbUser._id)
 
     groups = groups.map(g => {
@@ -44,6 +48,9 @@ accountsApi.sessionUser = async (req, res) => {
     delete clonedUser.__v
     delete clonedUser.iOSDeviceTokens
     delete clonedUser.deleted
+    clonedUser.role = _.clone(clonedUser.role._doc || clonedUser.role)
+    clonedUser.role.isAdmin = isAdmin
+    clonedUser.role.isAgent = isAgent
     clonedUser.groups = groups
 
     return res.json(clonedUser)

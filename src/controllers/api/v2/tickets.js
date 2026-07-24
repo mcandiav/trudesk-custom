@@ -30,6 +30,8 @@ ticketsV2.create = function (req, res) {
 ticketsV2.get = async (req, res) => {
   const query = req.query
   const type = query.type || 'all'
+  const isAdmin = permissions.canThis(req.user.role, 'admin:*')
+  const isAgent = permissions.canThis(req.user.role, 'agent:*')
 
   let limit = 50
   let page = 0
@@ -49,9 +51,9 @@ ticketsV2.get = async (req, res) => {
 
   try {
     let groups = []
-    if (req.user.role.isAdmin) {
+    if (isAdmin) {
       groups = await Models.Group.find({})
-    } else if (req.user.role.isAgent) {
+    } else if (isAgent) {
       const dbGroups = await Models.Department.getDepartmentGroupsOfUser(req.user._id)
       groups = dbGroups.map(g => g._id)
     } else {
@@ -96,7 +98,7 @@ ticketsV2.get = async (req, res) => {
         break
     }
 
-    if (!req.user.role.isAdmin && !permissions.canThis(req.user.role, 'tickets:viewall', false)) {
+    if (!isAdmin && !permissions.canThis(req.user.role, 'tickets:viewall', false)) {
       queryObject.owner = req.user._id
     }
 
@@ -120,15 +122,17 @@ ticketsV2.get = async (req, res) => {
 ticketsV2.single = async function (req, res) {
   const uid = req.params.uid
   if (!uid) return apiUtils.sendApiError(res, 400, 'Invalid Parameters')
+  const isAdmin = permissions.canThis(req.user.role, 'admin:*')
+  const isAgent = permissions.canThis(req.user.role, 'agent:*')
   Models.Ticket.getTicketByUid(uid, function (err, ticket) {
     if (err) return apiUtils.sendApiError(res, 500, err)
     if (!ticket) return apiUtils.sendApiError(res, 404, 'Ticket not found')
 
-    if (req.user.role.isAdmin) {
+    if (isAdmin) {
       return apiUtils.sendApiSuccess(res, { ticket })
     }
 
-    if (req.user.role.isAgent) {
+    if (isAgent) {
       Models.Department.getDepartmentGroupsOfUser(req.user._id, function (err, dbGroups) {
         if (err) return apiUtils.sendApiError(res, 500, err)
 
