@@ -572,33 +572,6 @@ class SingleTicketContainer extends React.Component {
                       </div>
                     )}
 
-                    {helpers.canUser('agent:*', true) && (
-                      <div className='uk-width-1-1 padding-left-right-15'>
-                        <div className='tru-card ticket-details uk-clearfix'>
-                          <span>Subscribers</span>
-                          <div className='uk-margin-small-top'>
-                            <div className='uk-clearfix'>
-                              <strong>Creator:</strong> {this.isUserSubscribed(this.ticket.owner) ? 'Subscribed' : 'Not subscribed'}
-                            </div>
-                            {this.ticket.assignee && (
-                              <div className='uk-clearfix'>
-                                <strong>Assignee:</strong> {this.isUserSubscribed(this.ticket.assignee) ? 'Subscribed' : 'Not subscribed'}
-                              </div>
-                            )}
-                          </div>
-
-                          <div className='tag-list uk-clearfix' style={{ marginTop: 10 }}>
-                            {this.subscriberUsers.length < 1 && <div className='item'>No subscribers</div>}
-                            {this.subscriberUsers.map(subscriber => (
-                              <div key={subscriber._id} className='item' style={{ maxWidth: '100%', height: 'auto' }}>
-                                <strong>{subscriber.fullname || subscriber.username}</strong>
-                                {subscriber.email && <span className='uk-display-block'>{subscriber.email}</span>}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
@@ -650,6 +623,39 @@ class SingleTicketContainer extends React.Component {
                   </div>
                   <div className='pagination uk-float-right' style={{ marginRight: 5 }}>
                     <ul className='button-group'>
+                      {helpers.canUser('agent:*', true) && (
+                        <li className='pagination'>
+                          <div
+                            className='btn'
+                            style={{
+                              borderRadius: 3,
+                              marginRight: 5,
+                              padding: '8px 12px',
+                              height: 'auto',
+                              lineHeight: '1.4'
+                            }}
+                          >
+                            <div>
+                              <strong>Subscribers</strong>
+                            </div>
+                            <div>
+                              Creator: {this.isUserSubscribed(this.ticket.owner) ? 'Yes' : 'No'}
+                            </div>
+                            {this.ticket.assignee && (
+                              <div>
+                                Assignee: {this.isUserSubscribed(this.ticket.assignee) ? 'Yes' : 'No'}
+                              </div>
+                            )}
+                            <div style={{ marginTop: 4 }}>
+                              {this.subscriberUsers.length < 1 && 'No subscribers'}
+                              {this.subscriberUsers.length > 0 &&
+                                this.subscriberUsers
+                                  .map(subscriber => subscriber.fullname || subscriber.username || subscriber.email)
+                                  .join(', ')}
+                            </div>
+                          </div>
+                        </li>
+                      )}
                       {helpers.canUser('tickets:print') && (
                         <li className='pagination'>
                           <a
