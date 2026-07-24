@@ -19,6 +19,8 @@
 ### Open Source Help Desk - Simply Organized.
 Quickly resolve issues & task with an easy-to-use solution. Built with one goal in mind, to keep work loads organized and simple. **This is the source for Trudesk Community Edition. For the more comprehensive, cloud-hosted version, please see Trudesk Cloud at <a href="http://trudesk.io">Trudesk.io</a>.**
 
+En el fork **At-Once**, la arquitectura operativa de despliegue es **base + UI**: `trudesk-base` publica la imagen base lógica en GHCR, mientras `trudesk` es el servicio productivo que atiende usuarios y despliega con **`Dockerfile.ui`** sobre esa base. Como regla práctica, los cambios de UI salen con redeploy de `trudesk`, y los cambios de lógica/base requieren republicar la base o usar el flujo de excepción documentado.
+
 <p align="center">
     <img src="https://trudesk.io/images/hero-td-right.png" />
 </p>
@@ -81,14 +83,58 @@ Runbook completo (reconstruir desde cero, tres servicios, GHCR, `Dockerfile.ui`,
 
 | Fecha | Versión | Cambio realizado | Motivo | Impacto | Sección afectada |
 |---|---:|---|---|---|---|
+| 2026-07-24 | 2.2 | Se explicita la arquitectura `base + UI` en el contexto inicial del README | Evitar ambigüedad para agentes y operadores sobre qué servicio despliega UI vs lógica base | Reduce errores de diagnóstico y despliegue al distinguir `trudesk-base` de `trudesk` desde el inicio | Introducción / Arquitectura At-Once |
+| 2026-07-13 | 2.1 | Se documentan los cambios de CAPTCHA, mailer, confirmación al creador y commits del día | Consolidar la evolución implementada entre las versiones 1.2.21 y 1.2.34 | README alineado con producción y changelog At-Once creado | CAPTCHA / correo / despliegue |
 | 2026-07-13 | 1.2 | Modelo base (GHCR) + UI (`Dockerfile.ui`); runbook completo `ops-easypanel-rebuild.md` | Poder reconstruir desde cero (Easypanel, env, GHCR, emergencias) | Operación: File=`Dockerfile.ui` en `trudesk`; base en Stop; Action publish-base | Despliegue / Easypanel |
 | 2026-07-12 | 1.0 | Se define la integración saliente Trudesk → n8n para creación de tickets | Ejecutar automatizaciones externas cada vez que Trudesk registre un ticket nuevo | Requiere desarrollo backend acotado y configuración de un Webhook Trigger en n8n | Integración n8n para nuevos tickets |
 
 ### Estado documental
 
-- Versión arquitectónica documental: **1.2** (ops base+UI).
+- Versión arquitectónica documental: **2.2** (arquitectura base+UI explicitada en el contexto inicial).
 - Despliegue producción: `trudesk` con **`Dockerfile.ui`** sobre `ghcr.io/mcandiav/trudesk-custom-base`.
 - Integración n8n `ticket.created`: implementada (`TD_N8N_*` en env); URL vacía = no-op.
+
+## Cambios At-Once del 2026-07-13
+
+La versión productiva alcanzó **1.2.34**. El detalle cronológico se mantiene en [`docs/CHANGELOG-ATONCE.md`](docs/CHANGELOG-ATONCE.md).
+
+### CAPTCHA
+
+Se corrigió la visualización del CAPTCHA en las vistas públicas, especialmente `/newissue` y signup.
+
+Estado final:
+
+- el endpoint `/captcha` genera el SVG mediante `svg-captcha`;
+- se generan 6 caracteres con 2 líneas de ruido;
+- el SVG usa fondo cyan At-Once `#26c6da` y caracteres oscuros;
+- el fondo se genera en origen, no mediante manipulación posterior en el navegador;
+- el contenedor conserva borde redondeado y recorte visual;
+- se eliminaron soluciones temporales dependientes de gradientes CSS o JavaScript inline;
+- el cambio vive en `src/routes/index.js`, por lo que corresponde a la capa lógica/base.
+
+La decisión de generar el fondo dentro del SVG evita inconsistencias por caché CSS y garantiza que el CAPTCHA conserve contraste independientemente de cómo sea insertado en la página.
+
+### Mailer y remitente
+
+En la configuración productiva del mailer se dejó el remitente:
+
+```text
+HelpDesk AT-Once-AI <mcandia@at-once.cl>
+```
+
+El nombre visible identifica claramente el producto y la dirección pertenece al dominio corporativo At-Once. Esta configuración vive en el ambiente y no debe incluir credenciales SMTP en el repositorio.
+
+También se modificó el flujo `ticket:created` para incluir al creador del ticket entre los destinatarios del correo de confirmación, aunque no pertenezca al grupo o equipo asignado. Las plantillas de creación y actualización fueron rediseñadas con identidad At-Once, logo, tema oscuro y enlace directo al ticket.
+
+El valor `gen:siteurl` se normaliza eliminando barras finales para evitar enlaces con doble `/`, por ejemplo `//tickets/123`.
+
+### Excepción temporal en `Dockerfile.ui`
+
+`src/emitter/events/event_ticket_created.js` se copia actualmente desde `Dockerfile.ui` como hotfix para desplegar el correo al creador sin esperar una nueva publicación completa de la imagen base.
+
+Esto es una excepción al principio de separación base/UI. En una futura republicación de `trudesk-custom-base`, el hotfix debe incorporarse a la base y reevaluarse si la copia adicional sigue siendo necesaria.
+
+---
 
 ## Integración n8n para nuevos tickets
 
