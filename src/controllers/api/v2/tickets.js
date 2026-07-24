@@ -118,20 +118,31 @@ ticketsV2.single = async function (req, res) {
   if (!uid) return apiUtils.sendApiError(res, 400, 'Invalid Parameters')
   Models.Ticket.getTicketByUid(uid, function (err, ticket) {
     if (err) return apiUtils.sendApiError(res, 500, err)
+    if (!ticket) return apiUtils.sendApiError(res, 404, 'Ticket not found')
 
     if (req.user.role.isAdmin || req.user.role.isAgent) {
       Models.Department.getDepartmentGroupsOfUser(req.user._id, function (err, dbGroups) {
         if (err) return apiUtils.sendApiError(res, 500, err)
 
+        const hasPublic = permissions.canThis(req.user.role, 'tickets:public')
+        const canViewAll = permissions.canThis(req.user.role, 'tickets:viewall')
         const groups = dbGroups.map(function (g) {
           return g._id.toString()
         })
 
-        if (groups.includes(ticket.group._id.toString())) {
-          return apiUtils.sendApiSuccess(res, { ticket })
-        } else {
+        if (!groups.includes(ticket.group._id.toString()) && !(ticket.group.public && hasPublic)) {
           return apiUtils.sendApiError(res, 403, 'Forbidden')
         }
+
+        if (ticket.owner._id.toString() !== req.user._id.toString() && !canViewAll) {
+          return apiUtils.sendApiError(res, 403, 'Forbidden')
+        }
+
+        if (!permissions.canThis(req.user.role, 'comments:view')) ticket.comments = []
+
+        if (!permissions.canThis(req.user.role, 'tickets:notes')) ticket.notes = []
+
+        return apiUtils.sendApiSuccess(res, { ticket })
       })
     } else {
       Models.Group.getAllGroupsOfUser(req.user._id, function (err, userGroups) {

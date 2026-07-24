@@ -286,6 +286,9 @@ class SingleTicketContainer extends React.Component {
     // Perms
     const hasTicketUpdate = this.ticket && this.ticket.status.isResolved === false && helpers.canUser('tickets:update')
     const statusObj = this.ticket ? this.props.ticketStatuses.find(s => s.get('_id') === this.ticket.status._id) : null
+    const canViewSubscriberInfo = this.props.sessionUser
+      ? this.props.sessionUser.role.isAdmin || this.props.sessionUser.role.isAgent
+      : false
 
     const hasTicketStatusUpdate = () => {
       const isAgent = this.props.sessionUser ? this.props.sessionUser.role.isAgent : false
@@ -549,7 +552,7 @@ class SingleTicketContainer extends React.Component {
                       </div>
                     </div>
 
-                    {helpers.canUser('agent:*', true) && (
+                    {canViewSubscriberInfo && (
                       <div className='uk-width-1-1 padding-left-right-15'>
                         <div className='tru-card ticket-details pr-0 pb-0' style={{ height: 250 }}>
                           Ticket History
@@ -623,7 +626,7 @@ class SingleTicketContainer extends React.Component {
                   </div>
                   <div className='pagination uk-float-right' style={{ marginRight: 5 }}>
                     <ul className='button-group'>
-                      {helpers.canUser('agent:*', true) && (
+                      {canViewSubscriberInfo && (
                         <li className='pagination'>
                           <div
                             className='btn'
